@@ -1,0 +1,17 @@
+nbproject
+._*
+.~lock.*
+.buildpath
+.DS_Store
+.htaccess
+.idea
+.project
+.settings
+composer.lock
+/vendor/bin
+/vendor/
+*.sublime*
+/node_modules/
+/data/
+!/data/db/
+**/*.tmp*
