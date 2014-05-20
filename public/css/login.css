@@ -1,6 +1,6 @@
 .login-main-image {
  	color: blue;
-	background: url(../img/login/store.jpg) no-repeat center center fixed;
+	background: url(/dist/img/login/login.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
