@@ -45,7 +45,6 @@ module.exports = function(grunt) {
           {expand: true, cwd: 'public/css/', src: ['**'], dest: 'public/dist/css/'},
           {expand: true, cwd: 'module/Application/view/layout', src: 'layout.phtml.template', dest: 'module/Application/view/layout', rename: function(path, name) { name = 'layout.phtml'; return path+'/'+name; }},
           {expand: true, cwd: 'module/SamUser/view/layout', src: 'layout-login.phtml.template', dest: 'module/SamUser/view/layout', rename: function(path, name) { name = 'layout-login.phtml'; return path+'/'+name; }},
-          //{expand: true, cwd: 'public/css/vendor/', src: ['<%= vendor_files.copy.css %>'], dest: 'public/dist/css/'},
         ]
       },
       vendor: {
@@ -116,7 +115,6 @@ module.exports = function(grunt) {
   grunt.renameTask('watch', 'delta');
 
   grunt.registerTask('default', ['clean', 'copy:main', 'useminPrepare', 'concat', 'cssmin', 'uglify', 'filerev', 'usemin', 'copy:vendor']);
-  grunt.registerTask('prod', ['clean', 'concat', 'cssmin', 'uglify', 'copy']);
   grunt.registerTask('watch', ['default', 'delta']);
 };
 
