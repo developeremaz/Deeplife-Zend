@@ -8,31 +8,6 @@ module.exports = {
    * main HTML file, `less` is our main stylesheet, and `unit` contains our
    * app's unit tests.
    */
-  app_files: {
-    build: {
-      js: [
-        'public/js/skeleton.js',
-        'public/js/app.js',
-        'public/js/controllers.js',
-        'public/js/controllers/*.js',
-        'public/js/directives.js',
-        'public/js/directives/*.js',
-        'public/js/filters.js',
-        'public/js/services.js',
-        'public/js/services/*.js',
-      ],
-      css: [
-        'public/css/style.css',
-        'public/css/menu.css',
-        'public/css/table.css',
-        'public/css/login.css',
-      ],
-    },
-    copy: {
-      js: [],
-      css: ['print.css'],
-    }
-  },
 
   /**
    * This is the same as `app_files`, except it contains patterns that
@@ -49,14 +24,6 @@ module.exports = {
    * included in our app.
    */
   vendor_files: {
-    build: {
-      js: [
-        'public/js/vendor/Gettext.js',
-      ],
-      css: [],
-      assets: [
-      ],
-    },
     copy: {
       js: [
         'jquery.jeditable.mini.js',

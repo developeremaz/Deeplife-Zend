@@ -13,9 +13,19 @@
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
         <link href="//cdn.jsdelivr.net/angular.ngtable/0.3.1/ng-table.css" rel="stylesheet">
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/dist/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/dist/css/print.css', 'print')
-                        ->prependStylesheet($this->basePath() . '/dist/css/min.css')?>
+
+        <!-- build:css(public) /dist/css/min.css -->
+        <link rel="stylesheet" href="/css/style.css" media="screen"/>
+        <link rel="stylesheet" href="/css/menu.css" media="screen"/>
+        <link rel="stylesheet" href="/css/table.css" media="screen"/>
+        <link rel="stylesheet" href="/css/login.css" media="screen"/>
+        <!-- endbuild -->
+
+        <!-- build:css(public) /dist/css/print.css -->
+        <link rel="stylesheet" href="/dist/css/print.css" media="print"/>
+        <!-- endbuild -->
+
+        <link href="/dist/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
 
         <!-- Language file for javascript translations -->
         <link href="/i18n/<?php echo \Locale::getDefault(); ?>.po" rel="gettext" type="application/x-po">
@@ -82,16 +92,33 @@
         </div>
 
         <!-- Scripts -->
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/angularjs/1.2.4/angular-resource.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/angular.ngtable/0.3.1/ng-table.js"></script>
+
+        <!-- build:js(public) /dist/js/min.js -->
+        <script src="/dist/js/vendor/Gettext.js"></script>
+        <script src="/dist/js/skeleton.js"></script>
+        <script src="/dist/js/app.js"></script>
+        <script src="/dist/js/controllers.js"></script>
+        <script src="/dist/js/controllers/tax.js"></script>
+        <script src="/dist/js/controllers/user.js"></script>
+        <script src="/dist/js/directives.js"></script>
+        <script src="/dist/js/directives/alert.js"></script>
+        <script src="/dist/js/directives/ui-editable-check.js"></script>
+        <script src="/dist/js/directives/ui-editable.js"></script>
+        <script src="/dist/js/filters.js"></script>
+        <script src="/dist/js/services.js"></script>
+        <script src="/dist/js/services/tax.js"></script>
+        <script src="/dist/js/services/user.js"></script>
+        <script src="/dist/js/services/utils.js"></script>
+        <!-- endbuild -->
         <?php
-            echo $this->inlineScript()
-                        ->prependFile($this->basePath() . '/dist/js/min.js')
-                        ->prependFile("//cdn.jsdelivr.net/angular.ngtable/0.3.1/ng-table.js")
-                        ->prependFile("//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js")
-                        ->prependFile("//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js")
-                        ->prependFile("//cdn.jsdelivr.net/angularjs/1.2.4/angular-resource.min.js")
-                        ->prependFile("//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js")
-                        ->prependFile("//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js")
-                        ->prependFile("//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js");
+            echo $this->inlineScript();
         ?>
     </body>
 </html>

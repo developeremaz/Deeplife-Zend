@@ -7,22 +7,7 @@ module.exports = function(grunt) {
 
   var taskConfig = {
     pkg: grunt.file.readJSON('package.json'),
-    concat: {
-      js: {
-        src: [
-          '<%= vendor_files.build.js %>',
-          '<%= app_files.build.js %>',
-        ],
-        dest: 'public/dist/js/concat.js'
-      },
-      css: {
-        src: [
-          '<%= vendor_files.build.css %>',
-          '<%= app_files.build.css %>',
-        ],
-        dest: 'public/dist/css/concat.css'
-      },
-    },
+    concat: {},
     rename: {
       css: {
         files: [
@@ -43,15 +28,12 @@ module.exports = function(grunt) {
           drop_console: true
         }
       },
-      dist: {
-        'src': ['public/dist/js/concat.js'],
-        'dest': 'public/dist/js/min.js'
-      }
     },
     cssmin: {
       dist: {
-        'src': ['public/dist/css/concat.css'],
-        'dest': 'public/dist/css/min.css'
+        options: {
+          check: 'gzip'
+        }
       }
     },
     copy: {
@@ -59,16 +41,22 @@ module.exports = function(grunt) {
         files: [
           {expand: true, cwd: 'public/img/', src: ['**'], dest: 'public/dist/img/'},
           {expand: true, cwd: 'public/fonts/', src: ['**'], dest: 'public/dist/fonts/'},
-          {expand: true, cwd: 'public/js/', src: ['<%= app_files.copy.js %>'], dest: 'public/dist/js/'},
-          {expand: true, cwd: 'public/css/', src: ['<%= app_files.copy.css %>'], dest: 'public/dist/css/'},
-          {expand: true, cwd: 'public/js/vendor/', src: ['<%= vendor_files.copy.js %>'], dest: 'public/dist/js/'},
-          {expand: true, cwd: 'public/css/vendor/', src: ['<%= vendor_files.copy.css %>'], dest: 'public/dist/css/'},
+          {expand: true, cwd: 'public/js/', src: ['**'], dest: 'public/dist/js/'},
+          {expand: true, cwd: 'public/css/', src: ['**'], dest: 'public/dist/css/'},
+          {expand: true, cwd: 'module/Application/view/layout', src: 'layout.phtml.template', dest: 'module/Application/view/layout', rename: function(path, name) { name = 'layout.phtml'; return path+'/'+name; }},
+          {expand: true, cwd: 'module/SamUser/view/layout', src: 'layout-login.phtml.template', dest: 'module/SamUser/view/layout', rename: function(path, name) { name = 'layout-login.phtml'; return path+'/'+name; }},
+          //{expand: true, cwd: 'public/css/vendor/', src: ['<%= vendor_files.copy.css %>'], dest: 'public/dist/css/'},
         ]
       },
+      vendor: {
+        files: [
+          {expand: true, cwd: 'public/js/vendor/', src: ['<%= vendor_files.copy.js %>'], dest: 'public/dist/js/'},
+        ]
+      }
     },
     clean: {
       build: {
-        src: ['public/dist']
+        src: ['public/dist', 'module/Application/view/layout/*.phtml', 'module/SamUser/view/layout/*.phtml']
       }
     },
     delta: {
@@ -81,6 +69,35 @@ module.exports = function(grunt) {
          tasks: ['concat:css', 'copy', 'rename:css']
       },
     },
+    useminPrepare: {
+      options: {
+        dest: 'public'
+      },
+      html: 'module/Application/view/layout/layout.phtml'
+    },
+    usemin: {
+      options: {
+        assetsDirs: 'public',
+        root: 'public',
+        dest: 'public/dist'
+      },
+      html: ['module/Application/view/layout/layout.phtml', 'module/SamUser/view/layout/layout-login.phtml'],
+      css: ['public/dist/css/**/*.css']
+    },
+    filerev: {
+      options: {
+        length: 4
+      },
+      dist: {
+        files: [{
+          src: [
+            'public/dist/js/**/*.js',
+            'public/dist/css/**/*.css',
+            'public/dist/fonts/**/*.{eot*,otf,svg,ttf,woff}'
+          ]
+        }]
+      }
+    },
   };
 
   grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
@@ -92,11 +109,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-usemin');
+  grunt.loadNpmTasks('grunt-filerev');
 
   // Rename watch task so we can name our watch task watch and build things before launching watch
   grunt.renameTask('watch', 'delta');
 
-  grunt.registerTask('default', ['clean', 'concat', 'rename', 'copy']);
+  grunt.registerTask('default', ['clean', 'copy:main', 'useminPrepare', 'concat', 'cssmin', 'uglify', 'filerev', 'usemin', 'copy:vendor']);
   grunt.registerTask('prod', ['clean', 'concat', 'cssmin', 'uglify', 'copy']);
   grunt.registerTask('watch', ['default', 'delta']);
 };
