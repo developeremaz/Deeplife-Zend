@@ -96,4 +96,8 @@ Now you should see a login page. If you just created the database, you won't be 
 
     mysql -u dbuser --password=123 skeleton < data/db/start.sql
 
-That should do the trick to get up and running. You should now be able to login with the user *admin@osedea.com* using password *q1w2e3r4*.
+Don't forget to add the specified dns record to your host file to be able to access the web page:
+
+    127.0.0.1   skeleton.dev
+
+That should do the trick to get up and running. You should now be able to access http://skeleton.dev:8080 and login with the user *admin@osedea.com* using password *q1w2e3r4*.
