@@ -9,8 +9,53 @@ This app uses the Zend Framework 2 as the backend to route/login/provide data to
 Getting started
 ===============
 
-Like every project using Zend Framework 2 (zf2), you must get the necessary libraries to have your base working.
+First off, this project uses puphpet to create a vagrant machine. This means that you need to get the machine running.
 
+    vagrant up
+
+You can look into the *puphpet* directory for configuration files for puphpet. For example, you might want to rename the specified vhost if you use this skeleton as a base for another project:
+
+    vhosts:
+        OPHhGx2zl3DL:
+            servername: skeleton.dev
+            serveraliases:
+                - www.skeleton.dev
+            docroot: /var/www/public
+
+Or even change the forwarded ports from the virtual machine:
+
+    network:
+        private_network: 192.168.56.101
+        forwarded_port:
+            KgfbYah64y0E:
+                host: '5271'
+                guest: '22'
+            J1S41CprJmha:
+                host: '8080'
+                guest: '80'
+
+You might also want to change the database name or user credentials:
+
+    mysql:
+    install: '1'
+    root_password: '123'
+    adminer: 0
+    databases:
+        UG5V5tUhCoM4:
+            grant:
+                - ALL
+            name: skeleton
+            host: localhost
+            user: dbuser
+            password: '123'
+            sql_file: ''
+
+As you can see, you can use different setups for different projects. Apache or nginx, postgres or mysql, the list goes on!
+
+Like every project using Zend Framework 2 (zf2), you must still get the necessary libraries to have your base working.
+
+    vagrant ssh
+    cd /vagrant
     php composer.phar install
 
 Once you have the required lib for zf2, now is time to generate the default database schema. First off, you need to setup the database in zf2.
@@ -25,19 +70,15 @@ To do this, add a file *local.php* in the autoload subdirectory of the config ro
                     'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
                     'params' => array(
                         'host'     => 'localhost',
-                        'port'     => '3306',
-                        'user'     => 'someuser',
-                        'password' => 'somepassword',
+                        'port'     => '8889',
+                        'user'     => 'dbuser',
+                        'password' => '123',
                         'dbname'   => 'skeleton',
                     ),
                 ),
             ),
         ),
     );
-
-If you didn't already create the database, do it now :
-
-    mysqladmin -u someuser --password=somepassword create skeleton
 
 Once this is done, you can generate the schema using Doctrine :
 
@@ -53,6 +94,6 @@ This should install the required dependencies, then you can run grunt to generat
 
 Now you should see a login page. If you just created the database, you won't be able to login since you don't have any user. Run the startup SQL script :
 
-    mysql -u someuser --password=somepassword skeleton < data/db/start.sql
+    mysql -u dbuser --password=123 skeleton < data/db/start.sql
 
 That should do the trick to get up and running. You should now be able to login with the user *admin@osedea.com* using password *q1w2e3r4*.
