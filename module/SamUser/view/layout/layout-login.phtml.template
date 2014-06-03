@@ -54,7 +54,7 @@
         <script src="/dist/js/controllers/tax.js"></script>
         <script src="/dist/js/controllers/user.js"></script>
         <script src="/dist/js/directives.js"></script>
-        <script src="/dist/js/directives/alert.js"></script>
+        <script src="/dist/js/directives/alerts.js"></script>
         <script src="/dist/js/directives/ui-editable-check.js"></script>
         <script src="/dist/js/directives/ui-editable.js"></script>
         <script src="/dist/js/filters.js"></script>
