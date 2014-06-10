@@ -31,30 +31,36 @@ class BasicRestController extends AbstractRestfulController
     // Returned index
     protected $index;
 
-    protected function getEntityManager() {
-        if (null === $this->em)
+    protected function getEntityManager()
+    {
+        if (null === $this->em) {
             $this->em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        }
+
         return $this->em;
     }
 
     /**
      * Validators
      */
-    protected function getIdValidator() {
+    protected function getIdValidator()
+    {
         $chain = new ValidatorChain();
         $chain->attach(new ObjectExists(array('object_repository' => $this->getEntityManager()->getRepository($this->entity),
           'fields' => 'id')));
         return $chain;
     }
 
-    protected function invalidateCache() {
+    protected function invalidateCache()
+    {
         // Drop cache for all objects because we don't want relations to have old data
         $config = $this->getEntityManager()->getConfiguration();
         $cacheDriver = $config->getResultCacheImpl();
         return $cacheDriver->deleteAll();
     }
 
-    protected function triggerEvent($event, array $params) {
+    protected function triggerEvent($event, array $params)
+    {
         $eventManager = $this->getEventManager();
         $eventManager->addIdentifiers(array(get_called_class()));
         $eventManager->trigger($event, null, $params);
@@ -62,45 +68,15 @@ class BasicRestController extends AbstractRestfulController
 
     public function getList()
     {
-        $array = array();
-        $em = $this->getEntityManager();
-        $next = $this->params()->fromQuery('next');
+        $objects = $this->getEntityManager()->getRepository($this->entity)->findAll();
+        $objectsArr = array();
 
-        if(!isset($next)) {
-            $query = $em->createQuery("SELECT COUNT(e.id) FROM {$this->entity} e");
-            $count = $query->getSingleScalarResult();
-            $array['count'] = $count;
-            $next = -1;
+        foreach ($objects as $object) {
+            $objectsArr[] = $object->toArray();
         }
-
-        $joinFieldsStr = '';
-        $joinTablesStr = '';
-        $joinIndex = 0;
-        foreach($this->joinFields as $key=>$value) {
-            $joinIndexStr = "j$joinIndex";
-            $joinTablesStr .= " LEFT JOIN e.$key $joinIndexStr";
-            $joinFieldsStr .= ", partial $joinIndexStr.{{$value}}";
-            $joinIndex++;
-        }
-
-        $query = $em->createQuery("select partial e.{{$this->selectFields}}$joinFieldsStr from {$this->entity} e$joinTablesStr")
-                        ->setFirstResult($next+1)
-                        ->setMaxResults($this->maxResults)
-                        ->useResultCache(true, $this->cacheTime, "{$this->entity}_$next");
-        $objects = $query->getArrayResult();
-
-        foreach($objects as $objectKey=>$object) {
-            foreach($object as $fieldKey=>$field) {
-                if($field instanceof \DateTime) {
-                    $objects[$objectKey][$fieldKey] = $field->format('Y-m-d');
-                }
-            }
-        }
-
-        $array[$this->index] = $objects;
 
         return new JsonModel(
-            $array
+            $objectsArr
         );
     }
 
@@ -109,7 +85,7 @@ class BasicRestController extends AbstractRestfulController
         $object = $this->getEntityManager()->find($this->entity, $id);
 
         // Object doesn't exist, output 404
-        if(null === $object) {
+        if (null === $object) {
             $this->getResponse()->setStatusCode(404);
             return new JsonModel();
         }
@@ -122,7 +98,7 @@ class BasicRestController extends AbstractRestfulController
     public function create($data)
     {
         $request = $this->getRequest();
-        if(!$request->isPost()) {
+        if (!$request->isPost()) {
             $this->getResponse()->setStatusCode(500)->setReasonPhrase("Missing parameter.");
             return new JsonModel();
         }
@@ -132,7 +108,7 @@ class BasicRestController extends AbstractRestfulController
         // Validate using the form
         $form = $this->getServiceLocator()->get('EntityForm')->getForm($this->entity);
         $form->setData($data);
-        if(!$form->isValid()) {
+        if (!$form->isValid()) {
             $this->getResponse()->setStatusCode(500);
             return new JsonModel(array('messages' => $form->getMessages()));
         }
