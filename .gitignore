@@ -17,3 +17,4 @@ composer.lock
 !/data/db/
 **/*.tmp*
 .vagrant
+.sass-cache/
