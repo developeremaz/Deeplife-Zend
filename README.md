@@ -62,6 +62,7 @@ Once you have the required lib for zf2, now is time to generate the default data
 
 To do this, add a file *local.php* in the autoload subdirectory of the config root directory.
 
+    <?php
     /* /config/autoload/local.php */
     return array(
         'doctrine' => array(
