@@ -12,7 +12,8 @@ use Zend\Form\Annotation as ZFA;
  *
  * @ZFA\Name("tax-form")
  */
-class Tax {
+class Tax
+{
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -20,7 +21,7 @@ class Tax {
      *
      * @ZFA\Filter({"name":"StringTrim"})
      * @ZFA\Required(false)
-     * @ZFA\Attributes({"type":"hidden"})
+     * @ZFA\Attributes({"type":"hidden", "data-ng-model":"id"})
      */
     protected $id = null;
 
@@ -30,7 +31,7 @@ class Tax {
      * @ZFA\Filter({"name":"StringTrim"})
      * @ZFA\Required(true)
      * @ZFA\Validator({"name":"StringLength", "options":{"min":1, "max":5}})
-     * @ZFA\Attributes({"type":"text"})
+     * @ZFA\Attributes({"type":"text", "data-ng-model":"currentTax.code"})
      * @ZFA\Options({"label":"Code"})
      */
     protected $code = null;
@@ -41,7 +42,7 @@ class Tax {
      * @ZFA\Filter({"name":"StringTrim"})
      * @ZFA\Required(true)
      * @ZFA\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
-     * @ZFA\Attributes({"type":"text"})
+     * @ZFA\Attributes({"type":"text", "data-ng-model":"currentTax.title"})
      * @ZFA\Options({"label":"Title"})
      */
     protected $title = null;
@@ -51,7 +52,7 @@ class Tax {
      *
      * @ZFA\Filter({"name":"StringTrim"})
      * @ZFA\Required(true)
-     * @ZFA\Attributes({"type":"number", "step":"0.001"})
+     * @ZFA\Attributes({"type":"number", "step":"0.001", "data-ng-model":"currentTax.rate"})
      * @ZFA\Options({"label":"Rate"})
      */
     protected $rate = null;
@@ -62,16 +63,19 @@ class Tax {
      * @ZFA\Type("Application\Form\Element\Date")
      * @ZFA\Filter({"name":"StringTrim"})
      * @ZFA\Required(true)
+     * @ZFA\Attributes({"data-ng-model":"currentTax.date"})
      * @ZFA\Options({"label":"Valid From"})
      */
     protected $valid = null;
 
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->valid = new \DateTime('now');
     }
 
-    public function toArray() {
+    public function toArray()
+    {
         return array(
             'id' => $this->getId(),
             'code' => $this->getCode(),
@@ -213,12 +217,15 @@ class Tax {
      */
     public function setValid($valid)
     {
-        if($valid instanceof \DateTime) return $this->setValidRaw($valid);
+        if ($valid instanceof \DateTime) {
+            return $this->setValidRaw($valid);
+        }
 
-        if(null !== $valid)
+        if (null !== $valid) {
             $this->valid = \DateTime::createFromFormat('Y-m-d', $valid);
-        else
+        } else {
             $this->valid = $valid;
+        }
 
         return $this;
     }
