@@ -1,6 +1,6 @@
-skeletonServices.factory('User', ['$resource',
+skeletonServices.factory('Role', ['$resource',
     function ($resource) {
-        return $resource('/api/users/:id', {id: '@id'}, {
+        return $resource('/api/roles/:id', {id: '@id'}, {
             query: {method: 'GET', isArray: false},
             update: {method: 'PUT'}
         });
