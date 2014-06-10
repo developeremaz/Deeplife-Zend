@@ -36,6 +36,15 @@ module.exports = function(grunt) {
         }
       }
     },
+    compass: {
+      dist: {
+        options: {
+          sassDir: 'public/sass',
+          cssDir: 'public/css',
+          config: 'public/config.rb',
+        }
+      },
+    },
     copy: {
       main: {
         files: [
@@ -63,10 +72,10 @@ module.exports = function(grunt) {
          files: ['public/js/**/*.js', '!public/js/min.js'],
          tasks: ['concat:js', 'rename:js']
       },
-      css: {
-         files: ['public/css/**/*.css', '!public/css/min.css'],
-         tasks: ['concat:css', 'copy', 'rename:css']
-      },
+      sass: {
+       files: ['public/sass/**/*.scss'],
+       tasks: ['compass', 'concat:css', 'rename:css']
+      }
     },
     useminPrepare: {
       options: {
@@ -114,7 +123,7 @@ module.exports = function(grunt) {
   // Rename watch task so we can name our watch task watch and build things before launching watch
   grunt.renameTask('watch', 'delta');
 
-  grunt.registerTask('default', ['clean', 'copy:main', 'useminPrepare', 'concat', 'cssmin', 'uglify', 'filerev', 'usemin', 'copy:vendor']);
+  grunt.registerTask('default', ['clean', 'compass', 'copy:main', 'useminPrepare', 'concat', 'cssmin', 'uglify', 'filerev', 'usemin', 'copy:vendor']);
   grunt.registerTask('watch', ['default', 'delta']);
 };
 

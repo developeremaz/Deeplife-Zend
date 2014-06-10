@@ -1,0 +1,47 @@
+<?php echo $this->doctype(); ?>
+
+<!--[if IE 9]> <html class="no-js ie ie9 lte9" lang="en" ng-app="skeleton"> <![endif]-->
+<html lang="<?php echo \Locale::getDefault(); ?>" ng-app="skeleton" class="login-full-height">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headTitle()->prepend('ZF2-AngularJS Skeleton App')->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+        <!-- Le styles -->
+        <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700' rel='stylesheet' type='text/css'>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+        <link href="//cdn.jsdelivr.net/angular.ngtable/0.3.1/ng-table.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="/dist/css/min.6207.css" media="screen"/>
+
+        <link rel="stylesheet" href="/dist/css/print.css" media="print"/>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript(); ?>
+    </head>
+
+    <body class="login-full-height">
+        <div class="row login-full-height">
+            <div class="col-md-8 login-full-height login-main-image"></div>
+            <div class="col-md-4 login-container">
+                    <?php echo $this->content; ?>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/angularjs/1.2.4/angular-resource.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
+        <script type="text/javascript" src="//cdn.jsdelivr.net/angular.ngtable/0.3.1/ng-table.js"></script>
+
+        <script src="/dist/js/min.1a8d.js"></script>
+        <?php
+            echo $this->inlineScript();
+        ?>
+    </body>
+</html>

@@ -1,7 +1,0 @@
-a[href]:after {
-    content: "" !important;
-}	
-
-[ng-include="templates.pagination"] {
-	display: none !important;
-}
