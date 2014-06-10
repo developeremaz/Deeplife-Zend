@@ -15,14 +15,8 @@
         <link href="//cdn.jsdelivr.net/angular.ngtable/0.3.1/ng-table.css" rel="stylesheet">
 
         <!-- build:css(public) /dist/css/min.css -->
-        <link rel="stylesheet" href="/css/style.css" media="screen"/>
-        <link rel="stylesheet" href="/css/menu.css" media="screen"/>
-        <link rel="stylesheet" href="/css/table.css" media="screen"/>
-        <link rel="stylesheet" href="/css/login.css" media="screen"/>
-        <!-- endbuild -->
-
-        <!-- build:css(public) /dist/css/print.css -->
-        <link rel="stylesheet" href="/dist/css/print.css" media="print"/>
+        <link rel="stylesheet" href="/css/application.css" media="screen"/>
+        <link rel="stylesheet" href="/css/screen.css" media="screen"/>
         <!-- endbuild -->
 
         <!-- Scripts -->
