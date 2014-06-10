@@ -99,7 +99,11 @@
         <script src="/dist/js/app.js"></script>
         <script src="/dist/js/controllers.js"></script>
         <script src="/dist/js/controllers/tax.js"></script>
+        <script src="/dist/js/controllers/taxDetails.js"></script>
         <script src="/dist/js/controllers/user.js"></script>
+        <script src="/dist/js/controllers/userDetails.js"></script>
+        <script src="/dist/js/controllers/role.js"></script>
+        <script src="/dist/js/controllers/roleDetails.js"></script>
         <script src="/dist/js/directives.js"></script>
         <script src="/dist/js/directives/alerts.js"></script>
         <script src="/dist/js/directives/ui-editable-check.js"></script>
@@ -108,10 +112,9 @@
         <script src="/dist/js/services.js"></script>
         <script src="/dist/js/services/tax.js"></script>
         <script src="/dist/js/services/user.js"></script>
+        <script src="/dist/js/services/role.js"></script>
         <script src="/dist/js/services/utils.js"></script>
         <!-- endbuild -->
-        <?php
-            echo $this->inlineScript();
-        ?>
+
     </body>
 </html>
