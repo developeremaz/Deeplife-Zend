@@ -71,11 +71,11 @@ module.exports = function(grunt) {
     delta: {
       js: {
          files: ['public/js/**/*.js', '!public/js/min.js'],
-         tasks: ['concat:js', 'rename:js']
+         tasks: ['clean', 'copy:main', 'useminPrepare', 'concat', 'rename', 'filerev', 'usemin']
       },
       sass: {
        files: ['public/sass/**/*.scss'],
-       tasks: ['compass', 'concat:css', 'rename:css']
+       tasks: ['clean', 'compass', 'copy:main', 'useminPrepare', 'concat', 'rename', 'filerev', 'usemin']
       }
     },
     useminPrepare: {
