@@ -1,5 +1,5 @@
-skeletonControllers.controller('TaxDetailsCtrl', ['$scope', '$location', '$window', 'Tax', 'Utils',
-    function($scope, $location, $window, Tax, Utils) {
+skeletonControllers.controller('TaxDetailsCtrl', ['$scope', '$location', '$window', 'TaxResource', 'Utils',
+    function($scope, $location, $window, TaxResource, Utils) {
         $scope.currentTax = null;
 
         $scope.deleteTax = function() {
@@ -17,7 +17,7 @@ skeletonControllers.controller('TaxDetailsCtrl', ['$scope', '$location', '$windo
             if(newvalue && oldvalue && newvalue.$resolved && oldvalue.$resolved)
                 angular.forEach(newvalue, function(value, field) {
                     if(field.indexOf('$$') === -1 && typeof value !== "object" && value !== oldvalue[field]) {
-                        var temp = new Tax();
+                        var temp = new TaxResource();
                         temp[field] = value;
 
                         temp.$update({id: newvalue.id});
@@ -28,7 +28,8 @@ skeletonControllers.controller('TaxDetailsCtrl', ['$scope', '$location', '$windo
         // Load as soon as possible.
         // We are not using angularjs routing. We need to parse the url ourselves.
         var taxId = Utils.getIdFromUrl($location.absUrl());
-        if(taxId)
-            $scope.currentTax = Tax.get({id: taxId});
+        if (taxId) {
+            $scope.currentTax = TaxResource.get({id: taxId});
+        }
     }
 ]);

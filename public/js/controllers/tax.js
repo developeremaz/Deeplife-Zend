@@ -1,6 +1,7 @@
-skeletonControllers.controller('TaxCtrl', ['$scope', '$filter', 'Tax', 'Utils', 'ngTableParams',
-    function($scope, $filter, Tax, Utils, ngTableParams) {
+skeletonControllers.controller('TaxCtrl', ['$scope', '$filter', 'TaxResource', 'TaxService', 'Utils', 'ngTableParams',
+    function($scope, $filter, TaxResource, TaxService, Utils, ngTableParams) {
         $scope.taxes = [];
+        $scope.currentTax = {};
         $scope.totalTaxes = 0;
         $scope.query = "";
         $scope.enableFilter = false;
@@ -52,14 +53,12 @@ skeletonControllers.controller('TaxCtrl', ['$scope', '$filter', 'Tax', 'Utils', 
 
             // Disable inputs
             Utils.disable(selectorStr + ".modal-footer :input");
-
             var inputs = selector.find(".modal-body :input");
-            var data = Utils.JSONObjFromInputs(inputs);
 
             // Reset the errors
             selector.find(".errors").addClass('hide').html("");
 
-            var tax = new Tax(data);
+            var tax = new TaxResource($scope.currentTax);
             tax.$save(
                 function (success) {
                     // Add it to the tax array
@@ -87,7 +86,7 @@ skeletonControllers.controller('TaxCtrl', ['$scope', '$filter', 'Tax', 'Utils', 
                 $scope.taxes.forEach(function(taxResource, index) {
                     if (tax.id === taxResource.id) {
                         // We don't have a resource here, create one
-                        var res = new Tax();
+                        var res = new TaxResource();
 
                         // Send DELETE command
                         res.$delete({id:tax.id}, function() {
@@ -104,7 +103,7 @@ skeletonControllers.controller('TaxCtrl', ['$scope', '$filter', 'Tax', 'Utils', 
             if($scope.taxes.length < $scope.totalTaxes-1) {
                 // We use a temp array so we don't fire a modification each push
                 var temp = $scope.taxes;
-                Tax.query({next: temp.length}, function(response) {
+                TaxResource.query({next: temp.length}, function(response) {
                     angular.forEach(response.taxes, function(e) {
                         temp.push(e);
                     });
@@ -117,7 +116,7 @@ skeletonControllers.controller('TaxCtrl', ['$scope', '$filter', 'Tax', 'Utils', 
             }
         });
 
-        $scope.finishedLoading = function() {
+        $scope.setEnableFilter = function() {
             // If we are finished loading, flag that we can filter now
             if($scope.taxes.length >= $scope.totalTaxes-1) {
                 $scope.enableFilter = true;
@@ -126,11 +125,11 @@ skeletonControllers.controller('TaxCtrl', ['$scope', '$filter', 'Tax', 'Utils', 
         };
 
         // Load as soon as possible.
-        Tax.query({}, function(response) {
-            $scope.taxes = response.taxes;
-            $scope.totalTaxes = response.count;
-            $scope.finishedLoading();
-        });
+        TaxService.queryTax()
+            .then(function(response) {
+                $scope.taxes = response;
+            })
+            .then($scope.setEnableFilter);
     }
 ]);
 
