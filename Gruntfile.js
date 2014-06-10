@@ -11,12 +11,13 @@ module.exports = function(grunt) {
     rename: {
       css: {
         files: [
-          {src: ['public/dist/css/concat.css'], dest: ['public/dist/css/min.css']},
+          {src: ['.tmp/concat/dist/css/min.css'], dest: ['public/dist/css/min.css']},
+          {src: ['.tmp/concat/dist/css/print.css'], dest: ['public/dist/css/print.css']},
         ]
       },
       js: {
         files: [
-          {src: ['public/dist/js/concat.js'], dest: ['public/dist/js/min.js']},
+          {src: ['.tmp/concat/dist/js/min.js'], dest: ['public/dist/js/min.js']},
         ]
       }
     },
@@ -64,7 +65,7 @@ module.exports = function(grunt) {
     },
     clean: {
       build: {
-        src: ['public/dist', 'module/Application/view/layout/*.phtml', 'module/SamUser/view/layout/*.phtml']
+        src: ['public/dist', 'module/Application/view/layout/*.phtml', 'module/SamUser/view/layout/*.phtml', '.tmp']
       }
     },
     delta: {
@@ -123,7 +124,8 @@ module.exports = function(grunt) {
   // Rename watch task so we can name our watch task watch and build things before launching watch
   grunt.renameTask('watch', 'delta');
 
-  grunt.registerTask('default', ['clean', 'compass', 'copy:main', 'useminPrepare', 'concat', 'cssmin', 'uglify', 'filerev', 'usemin', 'copy:vendor']);
+  grunt.registerTask('default', ['clean', 'compass', 'copy:main', 'useminPrepare', 'concat', 'rename', 'filerev', 'usemin', 'copy:vendor']);
+  grunt.registerTask('prod', ['clean', 'copy:main', 'useminPrepare', 'concat', 'cssmin', 'uglify', 'filerev', 'usemin', 'copy:vendor']);
   grunt.registerTask('watch', ['default', 'delta']);
 };
 
