@@ -1,5 +1,5 @@
 skeletonServices.factory('User', ['$resource',
     function ($resource) {
-        return $resource('/api/users/:id', {id: '@id'});
+        return $resource('/api/users/:id');
     }
 ]);

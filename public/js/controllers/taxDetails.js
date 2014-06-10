@@ -5,7 +5,7 @@ skeletonControllers.controller('TaxDetailsCtrl', ['$scope', '$location', '$windo
         $scope.deleteTax = function() {
             if(confirm(_p("Do you really want to delete '%1'?", [$scope.currentTax.title]))) {
                 // Send DELETE command
-                $scope.currentTax.$delete({}, function() {
+                $scope.currentTax.$delete(function() {
                     // On success, go back to the list
                     $window.history.back();
                 });

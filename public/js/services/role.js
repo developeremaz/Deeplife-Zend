@@ -1,5 +1,5 @@
 skeletonServices.factory('Role', ['$resource',
     function ($resource) {
-        return $resource('/api/roles/:id', {id: '@id'});
+        return $resource('/api/roles/:id');
     }
 ]);
