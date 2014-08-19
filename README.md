@@ -102,3 +102,31 @@ Don't forget to add the specified dns record to your host file to be able to acc
     127.0.0.1   skeleton.dev
 
 That should do the trick to get up and running. You should now be able to access http://skeleton.dev:8080 and login with the user *admin@osedea.com* using password *q1w2e3r4*.
+
+If you want to use Xdebug with Vagrant you will need to use the following settings in your config.yaml:
+
+	xdebug:
+    install: 1
+    settings:
+        xdebug.remote_host: 10.0.2.2
+        xdebug.remote_enable: 1
+        xdebug.remote_port: 9000
+        
+If you want to confirm which settings are being used on your Vagrant then go to "/etc/php5/cli/conf.d".  You can change settings here and then restart apache 'sudo service apache2 restart'.  Then in your Preferences -> Package Settings -> Xdebug -> Settings - User put:
+
+	{    
+	// For remote debugging to resolve the file locations
+	// it is required to configure the path mapping
+	// with the server path as key and local path as value.
+	//
+	// Make sure to use absolute path when defining server path,
+	// because Xdebug debugger engine does not return symbolic links.
+	//
+	// Example:
+	// "/absolute/path/to/file/on/server" : "/path/to/file/on/computer",
+	// "/var/www/htdocs/example/" : "C:/git/websites/example/"
+		"path_mapping": {
+			"/var/www/" : "/Users/adamburvill/Projects/Tealbook/zf2-angularjs-	skeleton"
+		},
+	}
+This will map your local path to the Vagrant root (substitute your own local /path/to/your/project of course).  You cannot use '/vagrant' because symlinks don't work.  

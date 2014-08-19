@@ -38,7 +38,7 @@ vagrantfile-local:
             Ul1YgjIVIX4P:
                 source: ./
                 target: /var/www
-                nfs: 'false'
+                nfs: 'true'
         usable_port_range: 2200..2250
     ssh:
         host: null
