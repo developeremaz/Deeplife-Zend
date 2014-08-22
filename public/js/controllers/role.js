@@ -1,7 +1,6 @@
-skeletonControllers.controller('RoleCtrl', ['$scope', '$filter', 'Role', 'Utils', 'ngTableParams',
-    function($scope, $filter, Role, Utils, ngTableParams) {
+skeletonControllers.controller('RoleCtrl', ['$scope', '$q', 'RoleService', 'Utils',
+    function($scope, $q, RoleService, Utils) {
         $scope.roles = [];
-        $scope.totalRoles = 0;
         $scope.query = "";
         $scope.enableFilter = false;
 
@@ -13,106 +12,44 @@ skeletonControllers.controller('RoleCtrl', ['$scope', '$filter', 'Role', 'Utils'
             $scope.tableParams.filter(value);
         });
 
-        $scope.tableParams = new ngTableParams({
-            page: 1,            // show first page
-            count: 25,          // count per page
-            filter: {},
-            sorting: {
-                roleId: 'asc'    // initial sorting
-            }
-        }, {
-            total: function () { return getData().length; }, // length of data
-            getData: function($defer, params) {
-                // use build-in angular filter
-                var filteredData = params.filter() ? $filter('filter')(getData(), params.filter()) : getData();
-                var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
-
-                params.total(orderedData.length); // set total for recalc pagination
-
-                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-            },
-            $scope: { $data: {} }
-        });
+        $scope.tableParams = Utils.createNgTable({sorting:{roleId:'asc'}}, getData);
 
         $scope.create = function() {
-            // Disable inputs
-            Utils.disable("#role-create .modal-footer :input");
-
-            var inputs = $("#role-create .modal-body :input");
+            var selector = "#role-create";
+            var inputs = $(selector).find(".modal-body :input");
             var data = Utils.JSONObjFromInputs(inputs);
+            var createPromise = RoleService.create(data);
 
-            //ajax action to add element
-            $("#role-create").find(".errors").addClass('hide').html("");
+            Utils.create(selector, createPromise);
 
-            var role = new Role(data);
-            role.$save(
-                function (success) {
-                    // Add it to the role array
-                    $scope.roles.push(role);
-                    $scope.tableParams.reload();
-
-                    $scope.query = "";
-
-                    $("#role-create").modal('hide');
-
-                    // Disable inputs and reset form
-                    Utils.disable("#role-create .modal-footer :input");
-                    $("#role-create form")[0].reset();
-                },
-                function (error) {
-                    Utils.formErrorMessages(error.data.messages, inputs);
-                    Utils.disable("#role-create .modal-footer :input");
-                }
-            );
+            createPromise.then(function(roles) {
+                $scope.roles = roles;
+                $scope.tableParams.reload();
+            });
         };
 
         $scope.deleteRole = function(role) {
             if(confirm(_p("Do you really want to delete '%1'?", [role.roleId]))) {
-                // Find the project to delete
-                $scope.roles.forEach(function(roleResource, index) {
-                    if (role.id === roleResource.id) {
-                        var temp = new Role();
-
-                        // Send DELETE command
-                        temp.$delete({id:role.id}, function() {
-                            // On success, remove the role from the array
-                            $scope.roles.splice(index, 1);
-                            $scope.tableParams.reload();
-                        });
-                    }
+                RoleService.delete(role).then(function(roles) {
+                    $scope.roles = roles;
+                    $scope.tableParams.reload();
                 });
             }
         };
 
-        $scope.$watchCollection('roles', function() {
-            if($scope.roles.length < $scope.totalRoles-1) {
-                // We use a temp array so we don't fire a modification each push
-                var temp = $scope.roles;
-                Role.query({next: temp.length}, function(response) {
-                    angular.forEach(response.roles, function(e) {
-                        temp.push(e);
-                    });
-
-                    // This will trigger the watch again
-                    $scope.roles = temp;
-
-                    $scope.finishedLoading();
-                });
-            }
-        });
-
         $scope.finishedLoading = function() {
-            // If we are finished loading, flag that we can filter now
-            if($scope.roles.length >= $scope.totalRoles-1) {
-                $scope.enableFilter = true;
-                $scope.tableParams.reload();
-            }
+            $scope.enableFilter = true;
+            $scope.tableParams.reload();
         };
 
         // Load as soon as possible.
-        Role.query({}, function(response) {
-            $scope.roles = response.roles;
-            $scope.totalRoles = response.count;
+        var queryPromise = RoleService.query();
+
+        queryPromise.then(function(roles) {
+            $scope.roles = roles;
+        });
+
+        $q.all([queryPromise]).then(function(data) {
             $scope.finishedLoading();
         });
     }

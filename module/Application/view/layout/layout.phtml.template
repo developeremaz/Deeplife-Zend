@@ -116,5 +116,7 @@
         <script src="/dist/js/services/utils.js"></script>
         <!-- endbuild -->
 
+        <?php echo $this->inlineScript(); ?>
+
     </body>
 </html>

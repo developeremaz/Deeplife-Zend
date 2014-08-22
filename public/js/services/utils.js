@@ -1,4 +1,4 @@
-skeletonServices.service('Utils', function() {
+skeletonServices.service('Utils', ['$filter', 'ngTableParams', function($filter, ngTableParams) {
     this.getIdFromUrl = function(absUrl) {
         var id = null;
         var url = absUrl.split("/");
@@ -127,4 +127,47 @@ skeletonServices.service('Utils', function() {
             array[object.name] = object.value || '';
         }
     }
-});
+
+    this.create = function(selector, promise) {
+        var $selector = $(selector);
+        var self = this;
+
+        // Disable inputs
+        this.disable(selector + ".modal-footer :input");
+
+        // Reset errors
+        $selector.find(".errors").addClass('hide').html("");
+
+        promise.then(function(data) {
+            // Disable inputs and reset form
+            self.disable(selector + ".modal-footer :input");
+            $selector.find("form")[0].reset();
+            $selector.modal('hide');
+        });
+    };
+
+    this.createNgTable = function(params, data) {
+        return new ngTableParams({
+            page: params.page ? params.page : 1,
+            count: params.count ? params.count : 25,
+            filter: {},
+            sorting: params.sorting ? params.sorting : {id: 'asc'}
+        }, {
+            total: function () { return data().length; }, // length of data
+            getData: function($defer, params) {
+                var temp = data();
+
+                if(temp) {
+                    // use build-in angular filter
+                    var filteredData = params.filter() ? $filter('filter')(temp, params.filter()) : temp;
+                    var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
+
+                    params.total(orderedData.length); // set total for recalc pagination
+
+                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            },
+            $scope: { $data: {} }
+        });
+    };
+}]);

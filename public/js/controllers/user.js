@@ -1,8 +1,7 @@
-skeletonControllers.controller('UserCtrl', ['$scope', '$filter', 'User', 'Utils', 'ngTableParams',
-    function($scope, $filter, User, Utils, ngTableParams) {
+skeletonControllers.controller('UserCtrl', ['$scope', '$q', 'UserService', 'Utils',
+    function($scope, $q, UserService, Utils) {
         $scope.users = [];
         $scope.totalUsers = 0;
-        $scope.currentUser = null;
         $scope.query = "";
         $scope.enableFilter = false;
 
@@ -14,64 +13,20 @@ skeletonControllers.controller('UserCtrl', ['$scope', '$filter', 'User', 'Utils'
             $scope.tableParams.filter(value);
         });
 
-        $scope.tableParams = new ngTableParams({
-            page: 1,            // show first page
-            count: 25,          // count per page
-            filter: {},
-            sorting: {
-                email: 'asc'    // initial sorting
-            }
-        }, {
-            total: function () { return getData().length; }, // length of data
-            getData: function($defer, params) {
-                var temp = getData();
-
-                if(temp) {
-                    // use build-in angular filter
-                    var filteredData = params.filter() ? $filter('filter')(temp, params.filter()) : temp;
-                    var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
-
-                    params.total(orderedData.length); // set total for recalc pagination
-
-                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                }
-            },
-            $scope: { $data: {} }
-        });
+        $scope.tableParams = Utils.createNgTable({sorting:{email:'asc'}}, getData);
 
         $scope.create = function() {
-            var selectorStr = "#user-create";
-            var selector = $(selectorStr);
-
-            // Disable inputs
-            Utils.disable(selectorStr + ".modal-footer :input");
-
-            var inputs = selector.find(".modal-body :input");
+            var selector = "#user-create";
+            var inputs = $(selector).find(".modal-body :input");
             var data = Utils.JSONObjFromInputs(inputs);
+            var createPromise = UserService.create(data);
 
-            // Reset errors
-            selector.find(".errors").addClass('hide').html("");
+            Utils.create(selector, createPromise);
 
-            var user = new User(data);
-            user.$save(
-                function (success) {
-                    // Add it to the user array
-                    $scope.users.push(user);
-                    $scope.tableParams.reload();
-
-                    // Clear search field
-                    $scope.query = "";
-
-                    // Disable inputs and reset form
-                    Utils.disable(selectorStr + ".modal-footer :input");
-                    selector.find("form")[0].reset();
-                    selector.modal('hide');
-                },
-                function (error) {
-                    Utils.formErrorMessages(error.data.messages, inputs);
-                    Utils.disable(selectorStr + ".modal-footer :input");
-                }
-            );
+            createPromise.then(function(users) {
+                $scope.users = users;
+                $scope.tableParams.reload();
+            });
         };
 
         $scope.openModalPassword = function(user) {
@@ -156,51 +111,26 @@ skeletonControllers.controller('UserCtrl', ['$scope', '$filter', 'User', 'Utils'
 
         $scope.deleteUser = function(user) {
             if(confirm(_p("Do you really want to delete '%1'?", [user.firstName + " " + user.lastName + " <" + user.email + ">"]))) {
-                // Find the project to delete
-                $scope.users.forEach(function(userResource, index) {
-                    if (user.id === userResource.id) {
-                        var temp = new User();
-
-                        // Send DELETE command
-                        temp.$delete({id:user.id}, function() {
-                            // On success, remove the user from the array
-                            $scope.users.splice(index, 1);
-                            $scope.tableParams.reload();
-                        });
-                    }
+                UserService.delete(user).then(function(users) {
+                    $scope.users = users;
+                    $scope.tableParams.reload();
                 });
             }
         };
 
-        $scope.$watchCollection('users', function() {
-            if($scope.users.length < $scope.totalUsers-1) {
-                // We use a temp array so we don't fire a modification each push
-                var temp = $scope.users;
-                User.query({next: temp.length}, function(response) {
-                    angular.forEach(response.users, function(e) {
-                        temp.push(e);
-                    });
-
-                    // This will trigger the watch again
-                    $scope.users = temp;
-
-                    $scope.finishedLoading();
-                });
-            }
-        });
-
-        $scope.finishedLoading = function() {
-            // If we are finished loading, flag that we can filter now
-            if($scope.users.length >= $scope.totalUsers-1) {
-                $scope.enableFilter = true;
-                $scope.tableParams.reload();
-            }
+        $scope.finishedLoading = function(users) {
+            $scope.enableFilter = true;
+            $scope.tableParams.reload();
         };
 
         // Load as soon as possible.
-        User.query({}, function(response) {
-            $scope.users = response.users;
-            $scope.totalUsers = response.count;
+        var queryPromise = UserService.query();
+
+        queryPromise.then(function(users) {
+            $scope.users = users;
+        });
+
+        $q.all([queryPromise]).then(function(data) {
             $scope.finishedLoading();
         });
     }

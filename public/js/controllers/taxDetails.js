@@ -1,12 +1,10 @@
-skeletonControllers.controller('TaxDetailsCtrl', ['$scope', '$location', '$window', 'TaxResource', 'Utils',
-    function($scope, $location, $window, TaxResource, Utils) {
+skeletonControllers.controller('TaxDetailsCtrl', ['$scope', '$location', '$window', 'TaxService', 'Utils',
+    function($scope, $location, $window, TaxService, Utils) {
         $scope.currentTax = null;
 
         $scope.deleteTax = function() {
             if(confirm(_p("Do you really want to delete '%1'?", [$scope.currentTax.title]))) {
-                // Send DELETE command
-                $scope.currentTax.$delete(function() {
-                    // On success, go back to the list
+                TaxService.delete($scope.currentTax).then(function(taxes) {
                     $window.history.back();
                 });
             }
@@ -17,10 +15,13 @@ skeletonControllers.controller('TaxDetailsCtrl', ['$scope', '$location', '$windo
             if(newvalue && oldvalue && newvalue.$resolved && oldvalue.$resolved)
                 angular.forEach(newvalue, function(value, field) {
                     if(field.indexOf('$$') === -1 && typeof value !== "object" && value !== oldvalue[field]) {
-                        var temp = new TaxResource();
-                        temp[field] = value;
+                        var data = {};
+                        data.id = newvalue.id;
+                        data[field] = value;
 
-                        temp.$update({id: newvalue.id});
+                        TaxService.update($scope.currentTax, data).then(function(tax) {
+                            $scope.currentTax = tax;
+                        });
                     }
                 });
         }, true);
@@ -29,7 +30,9 @@ skeletonControllers.controller('TaxDetailsCtrl', ['$scope', '$location', '$windo
         // We are not using angularjs routing. We need to parse the url ourselves.
         var taxId = Utils.getIdFromUrl($location.absUrl());
         if (taxId) {
-            $scope.currentTax = TaxResource.get({id: taxId});
+            TaxService.get({id: taxId}).then(function(tax) {
+                $scope.currentTax = tax;
+            });
         }
     }
 ]);
