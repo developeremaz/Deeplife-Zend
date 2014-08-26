@@ -1,7 +1,9 @@
 skeletonServices
     .service('RoleResource', ['$resource',
         function ($resource) {
-            return $resource('/api/roles/:id');
+            return $resource('/api/roles/:id', {id: '@id'}, {
+                update: {method: 'PUT'}
+            });
         }
     ])
 
@@ -9,8 +11,21 @@ skeletonServices
         function(RoleResource, $q) {
             var roles = [], currentRole = null, currentRoleId = null;
 
-            this.get = function() {
-                return RoleResource.get({ id: id }).$promise;
+            this.get = function(params) {
+                var defer = $q.defer();
+
+                if(currentRole && currentRoleId === id) {
+                    defer.resolve(currentRole);
+                } else {
+                    RoleResource.get(params, function(data) {
+                        currentRole = data;
+                        currentRoleId = params.id ? params.id : null;
+
+                        defer.resolve(currentRole);
+                    });
+                }
+
+                return defer.promise;
             };
 
             this.query = function() {
@@ -55,6 +70,27 @@ skeletonServices
                     roles.push(data);
 
                     defer.resolve(roles);
+                });
+
+                return defer.promise;
+            };
+
+            this.update = function(role) {
+                var defer = $q.defer();
+
+                var found = currentRole;
+                if(role.id !== currentRole.id) {
+                    // Find it in the list and update it
+                    found = $filter('filter')(roles, {id: role.id}, true);
+                    if(found && found.length === 1) {
+                        found = found[0];
+                    }
+                }
+
+                var temp = new RoleResource(found);
+                temp.$update({}, function(data) {
+                    found = data;
+                    defer.resolve(found);
                 });
 
                 return defer.promise;

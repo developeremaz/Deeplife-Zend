@@ -74,7 +74,6 @@ skeletonControllers.controller('UserCtrl', ['$scope', '$q', 'UserService', 'Util
                 .prop("checked", null);
 
             // Get selected user roles and check them in the modal window
-            console.log(user.roles);
             angular.forEach(user.roles, function(role) {
                 modal.find(":input[value='" + role.id + "']").prop("checked", "checked");
             });
@@ -85,7 +84,6 @@ skeletonControllers.controller('UserCtrl', ['$scope', '$q', 'UserService', 'Util
             var userId = modal.data("id");
             var button = modal.find("button");
             var roles = $.map(modal.find(":input:checked"), function(n) { return $(n).val(); });
-            console.log(roles);
 
             button.attr('disabled','disabled');
 
@@ -133,6 +131,33 @@ skeletonControllers.controller('UserCtrl', ['$scope', '$q', 'UserService', 'Util
         $q.all([queryPromise]).then(function(data) {
             $scope.finishedLoading();
         });
+    }
+]);
+
+skeletonControllers.controller('UserDetailsCtrl', ['$scope', '$location', '$window', 'UserService', 'Utils',
+    function($scope, $location, $window, UserService, Utils) {
+        $scope.currentUser = null;
+
+        $scope.deleteUser = function() {
+            if(confirm(_p("Do you really want to delete '%1'?", [$scope.currentUser.firstName + " " + $scope.currentUser.lastName + " <" + $scope.currentUser.email + ">"]))) {
+                UserService.delete($scope.currentUser).then(function(taxes) {
+                    $window.history.back();
+                });
+            }
+        };
+
+        $scope.update = function(newValue, oldValue) {
+            UserService.update($scope.currentUser);
+        };
+
+        // Load as soon as possible.
+        // We are not using angularjs routing. We need to parse the url ourselves.
+        var userId = Utils.getIdFromUrl($location.absUrl());
+        if(userId) {
+            UserService.get({id: userId}).then(function(user) {
+                $scope.currentUser = user;
+            });
+        }
     }
 ]);
 

@@ -55,7 +55,16 @@ skeletonDirectives.directive('uiEditable', ['$timeout', '$compile', function ($t
                                 element.children(0).editable(function (val) {
                                     var tVal = $.trim(val);
                                     if (ngModel.$viewValue !== tVal)
-                                        scope.$apply(function () { return ngModel.$setViewValue(tVal); });
+                                        scope.$apply(function () {
+                                            ngModel.$setViewValue(tVal);
+                                            ngModel.$render();
+
+                                            if(attrs.ngChange) {
+                                                scope[attrs.ngChange](tVal, ngModel.$viewValue);
+                                            }
+
+                                            return true;
+                                        });
 
                                     // We have a select, we must return the string value, not the id
                                     var tempJSON = JSON.parse(attrs.data);

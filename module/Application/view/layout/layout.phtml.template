@@ -100,9 +100,7 @@
         <script src="/dist/js/controllers.js"></script>
         <script src="/dist/js/controllers/tax.js"></script>
         <script src="/dist/js/controllers/user.js"></script>
-        <script src="/dist/js/controllers/userDetails.js"></script>
         <script src="/dist/js/controllers/role.js"></script>
-        <script src="/dist/js/controllers/roleDetails.js"></script>
         <script src="/dist/js/directives.js"></script>
         <script src="/dist/js/directives/alerts.js"></script>
         <script src="/dist/js/directives/ui-editable-check.js"></script>
