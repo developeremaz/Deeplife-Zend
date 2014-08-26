@@ -99,7 +99,6 @@
         <script src="/dist/js/app.js"></script>
         <script src="/dist/js/controllers.js"></script>
         <script src="/dist/js/controllers/tax.js"></script>
-        <script src="/dist/js/controllers/taxDetails.js"></script>
         <script src="/dist/js/controllers/user.js"></script>
         <script src="/dist/js/controllers/userDetails.js"></script>
         <script src="/dist/js/controllers/role.js"></script>

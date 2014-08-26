@@ -2,12 +2,6 @@ skeletonDirectives.directive('uiEditable', ['$timeout', '$compile', function ($t
     return {
         restrict: 'A',
         require: '?ngModel',
-        scope: {
-            type: '@',
-            data: '@',
-            mask: '@',
-            target: '@',
-        },
         transclude: true,
         link: function (scope, element, attrs, ngModel) {
             if (!ngModel) return; // do nothing if no ng-model
@@ -87,7 +81,16 @@ skeletonDirectives.directive('uiEditable', ['$timeout', '$compile', function ($t
                             element.children(0).editable(function (val) {
                                 var tVal = $.trim(val);
                                 if (ngModel.$viewValue !== tVal)
-                                    scope.$apply(function () { return ngModel.$setViewValue(tVal); });
+                                    scope.$apply(function () {
+                                        ngModel.$setViewValue(tVal);
+                                        ngModel.$render();
+
+                                        if(attrs.ngChange) {
+                                            scope[attrs.ngChange](tVal, ngModel.$viewValue);
+                                        }
+
+                                        return true;
+                                    });
                                 return tVal;
                             }, options);
                         }, 500);

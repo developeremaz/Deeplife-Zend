@@ -20,9 +20,9 @@
       <div id="description" class="panel-collapse collapse in">
         <div class="panel-body">
           <table class="details">
-            <tr><td><?php echo $this->translate('Code'); ?></td><td><div ui-editable ng-model="currentTax.code" ng-transclude>{{currentTax.code}}</div></td></tr>
-            <tr><td><?php echo $this->translate('Title'); ?></td><td><div ui-editable ng-model="currentTax.title" ng-transclude>{{currentTax.title}}</div></td></tr>
-            <tr><td><?php echo $this->translate('Rate'); ?></td><td><div ui-editable ng-model="currentTax.rate" ng-transclude>{{currentTax.rate}}</div></td></tr>
+            <tr><td><?php echo $this->translate('Code'); ?></td><td><div ui-editable ng-model="currentTax.code" ng-change="update" ng-transclude>{{currentTax.code}}</div></td></tr>
+            <tr><td><?php echo $this->translate('Title'); ?></td><td><div ui-editable ng-model="currentTax.title" ng-change="update" ng-transclude>{{currentTax.title}}</div></td></tr>
+            <tr><td><?php echo $this->translate('Rate'); ?></td><td><div ui-editable ng-model="currentTax.rate" ng-change="update" ng-transclude>{{currentTax.rate}}</div></td></tr>
             <tr><td><?php echo $this->translate('Valid From'); ?></td><td><div ui-editable ng-model="currentTax.valid" ng-transclude>{{currentTax.valid}}</div></td></tr>
           </table>
         </div>

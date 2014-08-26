@@ -56,3 +56,30 @@ skeletonControllers.controller('TaxCtrl', ['$scope', '$q', 'TaxService', 'Utils'
     }
 ]);
 
+skeletonControllers.controller('TaxDetailsCtrl', ['$scope', '$location', '$window', 'TaxService', 'Utils',
+    function($scope, $location, $window, TaxService, Utils) {
+        $scope.currentTax = null;
+
+        $scope.deleteTax = function() {
+            if(confirm(_p("Do you really want to delete '%1'?", [$scope.currentTax.title]))) {
+                TaxService.delete($scope.currentTax).then(function(taxes) {
+                    $window.history.back();
+                });
+            }
+        };
+
+        $scope.update = function(newValue, oldValue) {
+            TaxService.update($scope.currentTax);
+        };
+
+        // Load as soon as possible.
+        // We are not using angularjs routing. We need to parse the url ourselves.
+        var taxId = Utils.getIdFromUrl($location.absUrl());
+        if (taxId) {
+            TaxService.get({id: taxId}).then(function(tax) {
+                $scope.currentTax = tax;
+            });
+        }
+    }
+]);
+

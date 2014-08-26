@@ -1,7 +1,9 @@
 skeletonServices
     .service('TaxResource', ['$resource',
         function ($resource) {
-            return $resource('/api/taxes/:id');
+            return $resource('/api/taxes/:id', {id: '@id'}, {
+                update: {method: 'PUT'}
+            });
         }
     ])
 
@@ -73,18 +75,23 @@ skeletonServices
                 return defer.promise;
             };
 
-            this.update = function(tax, data) {
+            this.update = function(tax) {
                 var defer = $q.defer();
 
-                if(tax.id === currentTax.id) {
-                    var temp = new TaxResource();
-                    temp.$update(data, function(data) {
-                        currentTax = data;
-                        defer.resolve(currentTax);
-                    });
-                } else {
+                var found = currentTax;
+                if(tax.id !== currentTax.id) {
                     // Find it in the list and update it
+                    found = $filter('filter')(taxes, {id: tax.id}, true);
+                    if(found && found.length === 1) {
+                        found = found[0];
+                    }
                 }
+
+                var temp = new TaxResource(found);
+                temp.$update({}, function(data) {
+                    found = data;
+                    defer.resolve(found);
+                });
 
                 return defer.promise;
             };
