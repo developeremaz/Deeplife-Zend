@@ -120,7 +120,7 @@ skeletonControllers.controller('UserDetailsCtrl', ['$scope', '$location', '$wind
 
         $scope.deleteUser = function() {
             if(confirm(_p("Do you really want to delete '%1'?", [$scope.currentUser.firstName + " " + $scope.currentUser.lastName + " <" + $scope.currentUser.email + ">"]))) {
-                UserService.delete($scope.currentUser).then(function(taxes) {
+                UserService.delete($scope.currentUser).then(function(users) {
                     $window.history.back();
                 });
             }
