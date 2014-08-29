@@ -4,11 +4,8 @@ namespace SamUser\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 
-use SamUser\Entity\User;
-use SamUser\Entity\Role;
-
-class UsersController extends AbstractActionController {
-
+class UsersController extends AbstractActionController
+{
     protected $em;
 
     protected function getEntityManager() {
@@ -34,12 +31,23 @@ class UsersController extends AbstractActionController {
         $parents = array_filter($roles, array($this, "filterParent"));
         $childs = array_filter($roles, array($this, "filterChild"));
 
-        $createForm = $this->getServiceLocator()->get('EntityForm')->getForm('SamUser\Entity\User', 'create()');
+        // Service locator
+        $sl = $this->getServiceLocator();
+
+        // Create form
+        $createForm = $sl->get('EntityForm')->getForm('SamUser\Entity\User', 'create()');
+
+        // Change password form
+        $changePasswordForm = $sl->get('FormElementManager')->get(
+            'SamUser\Form\ChangePassword',
+            array('name' => 'change-password')
+        );
 
         return array(
             'rolesParent' => $parents,
             'rolesChild' => $childs,
             'form' => $createForm,
+            'changePasswordForm' => $changePasswordForm,
         );
     }
 

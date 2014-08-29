@@ -21,7 +21,7 @@
             <td data-title="'<?php echo $this->translate('Actions'); ?>'">
                 <div class="container">
                   <div class="btn-group btn-group-xs">
-                      <button type="button" title="<?php echo $this->translate('Change password'); ?>" class="btn btn-warning password" ng-click="openModalPassword(user)">
+                      <button type="button" title="<?php echo $this->translate('Change password'); ?>" class="btn btn-warning password" ng-click="passwordForm.id = user.id; openModal('#user-password');">
                         <span class="glyphicon glyphicon-asterisk"></span>
                       </button>
                       <button type="button" title="<?php echo $this->translate('Roles'); ?>" class="btn btn-primary roles" ng-click="openModalRoles(user)">
@@ -73,38 +73,6 @@
         </div>
     </div>
 
-    <div id="user-password" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h3><?php echo $this->translate('Set password'); ?></h3>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal">
-                        <div id="password-group" class="control-group">
-                            <label class="control-label" for="password"><?php echo $this->translate('New password'); ?></label>
-                            <div class="controls">
-                                <input class="form-control" id="password" name="password" type="password" required="required"/>
-                                <span id="password-error" class="help-block hide">Password should not be empty</span>
-                            </div>
-                        </div>
-                        <div id="password-confirm-group" class="control-group">
-                            <label class="control-label" for="password-confirm"><?php echo $this->translate('Confirm password'); ?></label>
-                            <div class="controls">
-                                <input class="form-control" id="password-confirm" name="password-confirm" type="password" required="required"/>
-                                <span id="password-confirm-error" class="help-block hide">Password do not match</span>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <div class="form-group"><button type="button" class="btn btn-default form-control" data-dismiss="modal"><?php echo $this->translate('Close'); ?></button></div>
-                    <div class="form-group"><button type="button" class="btn btn-primary form-control save" data-loading-text="Save" ng-click="savePassword()"><?php echo $this->translate('Save'); ?></button></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <?php echo $this->partial('partial/modalcreate.phtml', array('id' => 'user-create', 'title' => $this->translate('Create User'), 'form' => $this->form)); ?>
+    <?php echo $this->partial('partial/modalcreate.phtml', array('id' => 'user-password', 'title' => $this->translate('Set Password'), 'form' => $this->changePasswordForm)); ?>
 </div>

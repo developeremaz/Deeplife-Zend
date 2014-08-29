@@ -7,8 +7,8 @@ skeletonServices
         }
     ])
 
-    .service('UserService', ['UserResource', '$q',
-        function(UserResource, $q) {
+    .service('UserService', ['$q', '$filter', 'UserResource',
+        function($q, $filter, UserResource) {
             var users = [], currentUser = null, currentUserId = null;
 
             this.get = function(params) {
@@ -66,11 +66,15 @@ skeletonServices
                 var defer = $q.defer();
 
                 var temp = new UserResource(data);
-                temp.$save(null, function(data) {
-                    users.push(data);
+                temp.$save(null,
+                    function success(data) {
+                        users.push(data);
 
-                    defer.resolve(users);
-                });
+                        defer.resolve(users);
+                    },
+                    function error(data) {
+                        defer.reject(data);
+                    });
 
                 return defer.promise;
             };
@@ -79,7 +83,7 @@ skeletonServices
                 var defer = $q.defer();
 
                 var found = currentUser;
-                if(user.id !== currentUser.id) {
+                if(!currentUser || user.id !== currentUser.id) {
                     // Find it in the list and update it
                     found = $filter('filter')(users, {id: user.id}, true);
                     if(found && found.length === 1) {
@@ -94,6 +98,20 @@ skeletonServices
                 });
 
                 return defer.promise;
+            };
+
+            this.changePassword = function(id, password) {
+                // Find it in the list and update it
+                var found = $filter('filter')(users, {id: id}, true);
+                if(found && found.length === 1) {
+                    found = found[0];
+
+                    found.password = password;
+
+                    return this.update(found);
+                }
+
+                return false;
             };
         }
     ]);

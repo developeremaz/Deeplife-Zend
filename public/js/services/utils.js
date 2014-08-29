@@ -12,18 +12,23 @@ skeletonServices.service('Utils', ['$filter', 'ngTableParams', function($filter,
         return id;
     };
 
-    this.formErrorMessages = function(messages, inputs) {
-        angular.forEach(messages, function(message, input) {
-            var inputInError = $.grep($(inputs), function(e) { return e.name == input; });
-            var errorMessage = $(inputInError).closest('div[class^="form-group"]').find('.errors').removeClass('hide');
-            var appendedMessage = "";
-            angular.forEach(message, function(msg) {
-                appendedMessage += msg + '\n<br/>';
-            });
+    this.formErrorMessages = function(messages, formSelector) {
+        console.log(messages, messages.length);
+        if(messages && messages instanceof Array) {
+            angular.forEach(messages, function(message, input) {
+                var inputInError = $.grep(formSelector.find(':input'), function(e) { return e.name == input; });
+                var errorMessage = $(inputInError).closest('div[class^="form-group"]').find('.errors').removeClass('hide');
+                var appendedMessage = "";
+                angular.forEach(message, function(msg) {
+                    appendedMessage += msg + '\n<br/>';
+                });
 
-            $(errorMessage).html(appendedMessage);
-            $(inputInError).parent().addClass('.has-error');
-        });
+                $(errorMessage).html(appendedMessage);
+                $(inputInError).parent().addClass('.has-error');
+            });
+        } else {
+            formSelector.find('.form-errors').html(messages).removeClass('hide');
+        }
 
         return true;
     };
@@ -82,10 +87,10 @@ skeletonServices.service('Utils', ['$filter', 'ngTableParams', function($filter,
         return out;
     };
 
-    this.openModal = function(selector, initField, initValue) {
+    this.openModal = function(selector, params) {
         var modal = $(selector);
 
-        if(initField && initValue)
+        if(params && params.field && params.value)
             modal.find("input[name='"+initField+"']").val(initValue);
 
         modal.find(".errors").addClass('hide').html("");
@@ -133,17 +138,25 @@ skeletonServices.service('Utils', ['$filter', 'ngTableParams', function($filter,
         var self = this;
 
         // Disable inputs
-        this.disable(selector + ".modal-footer :input");
+        this.disable(selector + " .modal-footer :input");
 
         // Reset errors
         $selector.find(".errors").addClass('hide').html("");
 
-        promise.then(function(data) {
-            // Disable inputs and reset form
-            self.disable(selector + ".modal-footer :input");
-            $selector.find("form")[0].reset();
-            $selector.modal('hide');
-        });
+        promise
+            .then(function(data) {
+                $selector.find("form")[0].reset();
+                $selector.modal('hide');
+            })
+            .catch(function(data) {
+                if(data && data.data && data.data.messages) {
+                    self.formErrorMessages(data.data.messages, $selector.find('form'));
+                }
+            }).
+            finally(function() {
+                // Enable inputs
+                self.disable(selector + " .modal-footer :input");
+            });
     };
 
     this.createNgTable = function(params, data) {
