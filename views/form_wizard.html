@@ -1,63 +1,177 @@
-<div class="row wrapper border-bottom white-bg page-heading">
+<!-- Wrapper-->
+<div id="wrapper">
 
+    <!-- Navigation -->
+    <div ng-include="'views/common/navigation.html'"></div>
 
-    </div>
-</div>
-<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="gray-bg {{$state.current.name}}">
 
+        <!-- Page wrapper -->
+        <div ng-include="'views/common/topnavbar.html'"></div>
 
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox">
-                <div class="ibox-title">
-                    <h5>Budilding souls </h5>
+        <!-- Main view  -->
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>WIN</h2>
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li class="active">
+                        <strong>win</strong>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-2">
 
-                    <div ibox-tools></div>
-                </div>
-                <div class="ibox-content wizard">
-                    <h2>
-                       For Christ
-                    </h2>
-
-                  <!--  <p>
-                        This example show how to use ui-router to create wizard like form.
-                        <br/>
-                        <strong>Data from ng-model.</strong><br/>
-                        <code>{{ formData}}</code>
-                    </p>
-
-                    -->
-
-                    <div class="steps clearfix">
-                        <ul>
-
-                            <li ui-sref-active="current">
-                                <a ui-sref=".step_one" class="btn-default"><span></span> Basic</a>
-
-                            </li>
-                            <li ui-sref-active="current">
-                                <a ui-sref=".step_two" class="btn-default"><span></span> Medium</a>
-                            </li>
-                            <li ui-sref-active="current">
-                                <a ui-sref=".step_three" class="btn-default"><span></span> Advanced</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="wizard">
-                        <div class="content">
-
-                        <form name="signupForm" ng-submit="processForm()" class="p-lg">
-
-                            <!-- our nested state views will be injected here -->
-                            <div id="form-views" ui-view></div>
-                        </form>
-
-                        </div>
-                        </div>
-                </div>
             </div>
         </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content text-center p-md">
 
-    </div>
-</div>
+                            <h2><span class="text-navy">WELCOME DEEPLIFE TO  WIN PAGE</span></h2>
+
+
+                            <p>
+                                <br/>  GOD BELSS YOU FOR CAMING THIS BUTIFUL SATGE
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrapper wrapper-content animated fadeInRight" ng-controller="modalDemoCtrl">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>STEP 1</h5>
+
+                            </div>
+                            <div class="ibox-content">
+                                <!--<p>
+                                    Modals are streamlined, but flexible, dialog prompts with the minimum required functionality and smart defaults.
+                                </p>
+                                <p>
+                                    Creating custom modals is straightforward: create a partial view, its controller and reference them when using the service.-->
+                                </p>
+                                <div class="text-center">
+                                    <button class="btn btn-primary" ng-click="open3('lg')">NO</button>
+                                    <button class="btn btn-primary" ng-click="open3('sm')">YES</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>step 2</h5>
+
+                            </div>
+                            <div class="ibox-content">
+                                <!--  <p>
+                                      Modals are streamlined, but flexible, dialog prompts with the minimum required functionality and smart defaults.
+                                  </p>
+                                  <p>
+                                      Creating custom modals is straightforward: create a partial view, its controller and reference them when using the service.
+                                  </p>-->
+                                <div class="text-center">
+                                    <button class="btn btn-primary" ng-click="open3('lg')">NO</button>
+                                    <button class="btn btn-primary" ng-click="open3('sm')">YES</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="ibox ">
+                            <div class="ibox-title">
+                                <h5>STEP 3</h5>
+
+                            </div>
+                            <div class="ibox-content">
+                                <!--  <p>
+                                      Modals are streamlined, but flexible, dialog prompts with the minimum required functionality and smart defaults.
+                                  </p>
+                                  <p>
+                                      Creating custom modals is straightforward: create a partial view, its controller and reference them when using the service.
+                                  </p>-->
+                                <div class="text-center">
+                                    <button class="btn btn-primary" ng-click="open3('lg')">NO</button>
+                                    <button class="btn btn-primary" ng-click="open3('sm')">YES</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="ibox ">
+                                <div class="ibox-title">
+                                    <h5>STEP 4</h5>
+
+                                </div>
+                                <div class="ibox-content">
+                                    <!-- <p>
+                                         Modals are streamlined, but flexible, dialog prompts with the minimum required functionality and smart defaults.
+                                     </p>
+                                     <p>
+                                         Creating custom modals is straightforward: create a partial view, its controller and reference them when using the service.
+                                     </p>-->
+                                    <div class="text-center">
+                                        <button class="btn btn-primary" ng-click="open3('lg')">NO</button>
+                                        <button class="btn btn-primary" ng-click="open3('sm')">YES</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="ibox ">
+                                <div class="ibox-title">
+                                    <h5>STEP 5</h5>
+
+                                </div>
+                                <div class="ibox-content">
+                                    <!--   <p>
+                                           Modals are streamlined, but flexible, dialog prompts with the minimum required functionality and smart defaults.
+                                       </p>
+                                       <p>
+                                           Creating custom modals is straightforward: create a partial view, its controller and reference them when using the service.
+                                       </p>-->
+                                    <div class="text-center">
+                                        <button class="btn btn-primary" ng-click="open3('lg')">NO</button>
+                                        <button class="btn btn-primary" ng-click="open3('sm')">YES</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="ibox ">
+                                <div class="ibox-title">
+                                    <h5>STEP 6</h5>
+
+                                </div>
+                                <div class="ibox-content">
+                                    <!-- <p>
+                                         Modals are streamlined, but flexible, dialog prompts with the minimum required functionality and smart defaults.
+                                     </p>
+                                     <p>
+                                         Creating custom modals is straightforward: create a partial view, its controller and reference them when using the service.
+                                     </p>-->
+                                    <div class="text-center">
+                                        <button class="btn btn-primary" ng-click="open3('lg')">NO</button>
+                                        <button class="btn btn-primary" ng-click="open3('sm')">YES</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div></div>
+                </div>
+                <!-- Footer -->
+                <div ng-include="'views/common/footer.html'"></div>
+
+            </div>
+            <!-- End page wrapper-->
+
+        </div>
+        <!-- End wrapper-->
