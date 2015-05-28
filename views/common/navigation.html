@@ -34,6 +34,19 @@
                     <li ui-sref-active="active"><a ui-sref="dashboards.dashboard_4_1">{{ 'DASHBOARD' | translate }} v.4</a></li>
                 </ul>
             </li>
+            <li ng-class="{active: $state.includes('tables')}">
+                <a href=""><i class="fa fa-table"></i> <span class="nav-label">{{ 'Desciples' | translate }}</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" ng-class="{in: $state.includes('tables')}">
+                    <li ui-sref-active="active"><a ui-sref="tables.static_table">Add</a></li>
+                    <li ui-sref-active="active"><a ui-sref="tables.data_tables">List</a></li>
+               <!--     <li ui-sref-active="active"><a ui-sref="tables.nggrid">NG Grid</a></li> -->
+                </ul>
+            </li>
+
+
+
+
+            </li>
             <li ui-sref-active="active">
                 <a ui-sref="layouts"><i class="fa fa-certificate"></i> <span class="nav-label">{{ 'WIN' | translate }}</span> <span class="label label-primary pull-right">12</span></a>
             </li>
@@ -61,71 +74,62 @@
             <li ui-sref-active="active">
                 <a ui-sref="widgets"><i class="fa fa-eye"></i> <span class="nav-label">{{ 'BUILD' | translate }}</span><span class="label label-primary pull-right">25</span></a>
             </li>
+
+
+            <li ui-sref-active="active">
+                <a ui-sref="grid_options"><i class="fa fa-send"></i> <span class="nav-label">{{ 'SEND' | translate }}</span><span class="label label-primary pull-right">10</span></a>
+            </li>
             <!--
+
             <li ng-class="{active: $state.includes('forms')}">
-                <a href=""><i class="fa fa-edit"></i> <span class="nav-label">{{ 'FORMS' | translate }}</span><span class="fa arrow"></span></a>
+
+                <a href=""><i class="fa fa-edit"></i> <span class="nav-label">{{ 'WBS' | translate }}</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" ng-class="{in: $state.includes('forms')}">
-                    <li ui-sref-active="active"><a ui-sref="forms.basic_form">Basic form</a></li>
+                    <li ui-sref-active="active"><a ui-sref="forms.basic_form">Win</a></li>
                     <li ui-sref-active="active"><a ui-sref="forms.advanced_plugins">Advanced Plugins</a></li>
-                    <li ui-sref-active="active"><a ui-sref="forms.wizard.step_one">Wizard</a></li>
-                    <li ui-sref-active="active"><a ui-sref="forms.file_upload">File Upload</a></li>
+                    <li ui-sref-active="active"><a ui-sref="forms.wizard.step_one">Build</a></li>
+                    <li ui-sref-active="active"><a ui-sref="forms.file_upload">Send</a></li>
                     <li ui-sref-active="active"><a ui-sref="forms.text_editor">Text Editor</a></li>
                 </ul>
             </li>
+            <!--
+                      <li ng-class="{active: $state.includes('app')}">
+                          <a href=""><i class="fa fa-desktop"></i> <span class="nav-label">{{ 'APPVIEWS' | translate }}</span>  <span class="pull-right label label-primary">SPECIAL</span></a>
+                          <ul class="nav nav-second-level" ng-class="{in: $state.includes('app')}">
+                              <li ui-sref-active="active"><a ui-sref="app.contacts">Contacts</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.profile">Profile</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.projects">Projects</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.project_detail">Project detail</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.teams_board">Teams board</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.clients">Clients</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.file_manager">File manager</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.calendar">Calendar</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.issue_tracker">Issue tracker</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.blog">Blog</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.article">Article</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.faq">FAQ</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.timeline">Timeline</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.pin_board">Pin board</a></li>
+                              <li ui-sref-active="active"><a ui-sref="app.invoice">Invoice</a></li>
+                          </ul>
+                      </li>
+                      <li ng-class="{active: $state.includes('pages')}">
+                          <a href=""><i class="fa fa-files-o"></i> <span class="nav-label">{{ 'OTHERPAGES' | translate }}</span><span class="fa arrow"></span></a>
+                          <ul class="nav nav-second-level" ng-class="{in: $state.includes('pages')}">
+                              <li ui-sref-active="active"><a ui-sref="pages.search_results">Search results</a></li>
+                              <li><a href="lockscreen.html">Lockscreen</a></li>
+                              <li><a href="404.html">404 Page</a></li>
+                              <li><a href="500.html">500 Page</a></li>
+                              <li><a href="login.html">Login</a></li>
+                              <li><a href="login_two_columns.html">Login v.2</a></li>
+                              <li><a href="forgot_password.html">Forget password</a></li>
+                              <li><a href="register.html">Register</a></li>
+                              <li ui-sref-active="active"><a ui-sref="pages.empy_page">Empty page</a></li>
+                          </ul>
+                      </li>
+                      -->
 
-            <li ng-class="{active: $state.includes('app')}">
-                <a href=""><i class="fa fa-desktop"></i> <span class="nav-label">{{ 'APPVIEWS' | translate }}</span>  <span class="pull-right label label-primary">SPECIAL</span></a>
-                <ul class="nav nav-second-level" ng-class="{in: $state.includes('app')}">
-                    <li ui-sref-active="active"><a ui-sref="app.contacts">Contacts</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.profile">Profile</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.projects">Projects</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.project_detail">Project detail</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.teams_board">Teams board</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.clients">Clients</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.file_manager">File manager</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.calendar">Calendar</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.issue_tracker">Issue tracker</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.blog">Blog</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.article">Article</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.faq">FAQ</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.timeline">Timeline</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.pin_board">Pin board</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.invoice">Invoice</a></li>
-                </ul>
-            </li>
-            <li ng-class="{active: $state.includes('pages')}">
-                <a href=""><i class="fa fa-files-o"></i> <span class="nav-label">{{ 'OTHERPAGES' | translate }}</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" ng-class="{in: $state.includes('pages')}">
-                    <li ui-sref-active="active"><a ui-sref="pages.search_results">Search results</a></li>
-                    <li><a href="lockscreen.html">Lockscreen</a></li>
-                    <li><a href="404.html">404 Page</a></li>
-                    <li><a href="500.html">500 Page</a></li>
-                    <li><a href="login.html">Login</a></li>
-                    <li><a href="login_two_columns.html">Login v.2</a></li>
-                    <li><a href="forgot_password.html">Forget password</a></li>
-                    <li><a href="register.html">Register</a></li>
-                    <li ui-sref-active="active"><a ui-sref="pages.empy_page">Empty page</a></li>
-                </ul>
-            </li>
-            <li ng-class="{active: $state.includes('miscellaneous')}">
-                <a href=""><i class="fa fa-globe"></i> <span class="nav-label">{{ 'MISCELLANEOUS' | translate }}</span> <span class="label label-info pull-right">NEW</span></a>
-                <ul class="nav nav-second-level" ng-class="{in: $state.includes('miscellaneous')}">
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.notify">Notification</a></li>
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.nestable_list">Nestable list</a></li>
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.agile_board">Agile board</a></li>
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.timeline_2">Timeline v.2</a></li>
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.diff">Diff</a></li>
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.idle_timer">Idle timer</a></li>
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.spinners">Spinners</a></li>
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.live_favicon">Live favicon</a></li>
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.google_maps">Google maps</a></li>
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.code_editor">Code editor</a></li>
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.forum_view">Forum view</a></li>
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.validation">Validation</a></li>
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.modal_window">Modal window</a></li>
-                    <li ui-sref-active="active"><a ui-sref="miscellaneous.chat_view">Chat view</a></li>
-                </ul>
-            </li>
+            <!--
             <li ng-class="{active: $state.includes('ui')}">
                 <a href=""><i class="fa fa-flask"></i> <span class="nav-label">{{ 'UIELEMENTS' | translate }}</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" ng-class="{in: $state.includes('ui')}">
@@ -140,18 +144,8 @@
                 </ul>
             </li>
             -->
-            <li ui-sref-active="active">
-                <a ui-sref="grid_options"><i class="fa fa-send"></i> <span class="nav-label">{{ 'SEND' | translate }}</span><span class="label label-primary pull-right">10</span></a>
-            </li>
+
             <!--
-            <li ng-class="{active: $state.includes('tables')}">
-                <a href=""><i class="fa fa-table"></i> <span class="nav-label">{{ 'TABLES' | translate }}</span><span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" ng-class="{in: $state.includes('tables')}">
-                    <li ui-sref-active="active"><a ui-sref="tables.static_table">Static Tables</a></li>
-                    <li ui-sref-active="active"><a ui-sref="tables.data_tables">Data Tables</a></li>
-                    <li ui-sref-active="active"><a ui-sref="tables.nggrid">NG Grid</a></li>
-                </ul>
-            </li>
             <li ng-class="{active: $state.includes('gallery')}">
                 <a href=""><i class="fa fa-picture-o"></i> <span class="nav-label">{{ 'GALLERY' | translate }}</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" ng-class="{in: $state.includes('gallery')}">
@@ -161,7 +155,7 @@
                 </ul>
             </li>
             --
-            -->
+
             <li>
                 <a href=""><i class="fa fa-sitemap"></i> <span class="nav-label">{{ 'Desciples' | translate }}</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -171,6 +165,7 @@
 
                 </ul>
             </li>
+            -->
             <li ui-sref-active="active">
                 <a ui-sref="css_animations"><i class="fa fa-tree"></i> <span class="nav-label">{{ 'Tree' | translate }}</span><span class="label label-info pull-right"></span></a>
             </li>
