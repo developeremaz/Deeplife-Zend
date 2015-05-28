@@ -683,25 +683,22 @@ function flotChartCtrl() {
      */
     var pieData = [
         {
-            label: "Sales 1",
+            label: "Win",
             data: 21,
             color: "#d3d3d3"
         },
         {
-            label: "Sales 2",
+            label: "Multipling Desciples",
             data: 3,
             color: "#bababa"
         },
         {
-            label: "Sales 3",
+            label: "Engaged Desciple",
             data: 15,
             color: "#79d2c0"
         },
-        {
-            label: "Sales 4",
-            data: 52,
-            color: "#1ab394"
-        }
+
+
     ];
 
     /**
