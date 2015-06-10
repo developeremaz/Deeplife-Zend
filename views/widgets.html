@@ -18,11 +18,15 @@
 
 
 
+<div class="row wrapper border-bottom white-bg page-heading">
 
 
 
 
 
+<div class="wrapper wrapper-content animated fadeInRight" ng-controller="modalDemoCtrl">
+<div class="row">
+<div class="col-lg-12">
 
 
 
@@ -57,6 +61,7 @@
     <!--</div>-->
 
     <!--<div>-->
+    <!--<div>-->
     <div class="row">
         <div class="col-lg-7">
             <div class="ibox float-e-margins">
@@ -79,7 +84,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <a class="btn btn-primary btn-rounded" href="">+ ADD</a>
+                        <td><button class="btn btn-primary" ng-click="open3()">+ADD</button></td>
                         <div class="col-sm-7">
                             <div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
                                         <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
@@ -114,7 +119,7 @@
                         </td>
                         <td>Jul 14, 2013</td>
                         <td>Malawi</td>
-                        <td><a class="btn btn-primary btn-rounded" href="">Send</a></td>
+                        <td><button class="btn btn-primary" ng-click="open1()">Send</button></td>
 
                     </tr>
                     <tr>
@@ -126,7 +131,7 @@
                         </td>
                         <td>jun 9, 2015</td>
                         <td>Tanzania</td>
-                        <td><a class="btn btn-primary btn-rounded" href="">Send</a></td>
+                        <td><button class="btn btn-primary" ng-click="open1()">Send</button></td>
 
                     </tr>
                     <tr>
@@ -138,7 +143,7 @@
                         </td>
                         <td>aug 5,2015</td>
                         <td>Ethiopia</td>
-                        <td><a class="btn btn-primary btn-rounded" href="">Send</a></td>
+                        <td><button class="btn btn-primary" ng-click="open1()">Send</button></td>
                     </tr>
                     <tr>
                         <td><input icheck type="checkbox" ng-model="main.unCheck3"></td>
@@ -149,7 +154,7 @@
                         </td>
                         <td>jan 12,2015</td>
                         <td>Ethiopia</td>
-                        <td><a class="btn btn-primary btn-rounded" href="">Send</a></td>
+                        <td><button class="btn btn-primary" ng-click="open1()">Send</button></td>
                     </tr>
 
                     <tr>
@@ -161,7 +166,7 @@
                         </td>
                         <td>jan 12,2015</td>
                         <td>Kenya</td>
-                        <td><a class="btn btn-primary btn-rounded" href="">Send</a></td>
+                        <td><button class="btn btn-primary" ng-click="open1()">Send</button></td>
                     </tr>
 
                     <tr>
@@ -173,7 +178,7 @@
                         </td>
                         <td>jan 12,2015</td>
                         <td>South Africa</td>
-                        <td><a class="btn btn-primary btn-rounded" href="">Send</a></td>
+                        <td><button class="btn btn-primary" ng-click="open1()">Send</button></td>
                     </tr>
                     </tbody>
                 </table>
@@ -181,7 +186,6 @@
                 <pre>Page: {{main.bigCurrentPage}}</pre>
             </div>
         </div>
-
         <div class="col-lg-4" >
             <!--<div class="col-md-12">-->
             <div class="ibox-content text-center">
@@ -229,7 +233,6 @@
     </div>
 </div>
 
-
 </div>
 </div>
 </div>
@@ -270,4 +273,6 @@
 <!-- End page wrapper-->
 
 </div>
-<!-- End wrapper-->
+<!-
+</div>
+</div>- End wrapper-->
