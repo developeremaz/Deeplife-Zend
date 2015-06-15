@@ -39,12 +39,10 @@ class EntityForm implements ServiceLocatorAwareInterface {
         } else {
             $formObject = new $entity;
         }
-
         $builder = new AnnotationBuilder();
         $form = $builder->createForm($entity);
         $form->setHydrator(new DoctrineObject($object_manager, $entity));
         $form->setObject($formObject);
-
         // If we have a Doctrine Select, we need to set the object_manager on this element
         foreach($form as $element) {
             if($element instanceof \DoctrineORMModule\Form\Element\EntitySelect) {

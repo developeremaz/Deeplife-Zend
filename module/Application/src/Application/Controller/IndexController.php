@@ -15,9 +15,9 @@ class IndexController extends AbstractActionController
 
     public function languageAction() {
     	$to = $this->params()->fromQuery('to');
-
-		$language = new Container('language');
-		$language->current = $to;
+//
+//		$language = new Container('language');
+//		$language->current = $to;
 
 		$redirectUrl = $this->params()->fromQuery('redirect');
     	$this->redirect()->toUrl(htmlspecialchars($redirectUrl));

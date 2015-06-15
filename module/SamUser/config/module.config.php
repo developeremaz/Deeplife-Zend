@@ -133,7 +133,7 @@ return array(
         ),
     ),
     'translator' => array(
-        'locale' => 'fr_CA',
+        'locale' => 'en_US',
         'translation_file_patterns' => array(
             array(
                 'type'     => 'gettext',

@@ -41,21 +41,13 @@ class User implements UserInterface, ProviderInterface
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
-     *
-     * @ZFA\Exclude()
-     */
-    protected $username = null;
-
-    /**
-     * @var string
      * @ORM\Column(type="string", unique=true,  length=255)
      *
      * @ZFA\Filter({"name":"StringTrim"})
      * @ZFA\Required(true)
      * @ZFA\Validator({"name":"StringLength", "options":{"min":1, "max":255}})
      * @ZFA\Attributes({"type":"email", "placeholder":"someone@domain.com"})
-     * @ZFA\Options({"label":"Email"})
+     * @ZFA\Options({"label":"Emailia"})
      */
     protected $email = null;
 
@@ -63,7 +55,7 @@ class User implements UserInterface, ProviderInterface
      * @var string
      * @ORM\Column(type="string", length=200, nullable=true)
      *
-     * @ZFA\Exclude()
+     *@ZFA\Exclude()
      */
     protected $displayName = null;
 
@@ -75,7 +67,7 @@ class User implements UserInterface, ProviderInterface
      * @ZFA\Required(true)
      * @ZFA\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
      * @ZFA\Attributes({"type":"text", "placeholder":"John"})
-     * @ZFA\Options({"label":"First Name"})
+     * @ZFA\Options({"label":"Firsta Name"})
      */
     protected $firstName = null;
 
@@ -86,20 +78,65 @@ class User implements UserInterface, ProviderInterface
      * @ZFA\Filter({"name":"StringTrim"})
      * @ZFA\Required(true)
      * @ZFA\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
-     * @ZFA\Attributes({"type":"text", "placeholder":"Doe"})
-     * @ZFA\Options({"label":"Last Name"})
+     * @ZFA\Attributes({"type":"text", "placeholder":"frezer"})
+     * @ZFA\Options({"label":"middle Name"})
      */
-    protected $lastName = null;
+    protected $middleName = null;
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=100, nullable=true)
+     *
+     * @ZFA\Filter({"name":"StringTrim"})
+     * @ZFA\Required(true)
+     * @ZFA\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
+     * @ZFA\Attributes({"type":"text", "placeholder":"Tadesse"})
+     * @ZFA\Options({"label":"sure Name"})
+     */
+    protected $sureName = null;
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=100, nullable=true)
+     *
+     * @ZFA\Filter({"name":"StringTrim"})
+     * @ZFA\Required(true)
+     * @ZFA\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
+     * @ZFA\Attributes({"type":"text", "placeholder":"Ethiopia"})
+     * @ZFA\Options({"label":"country"})
+     */
+    protected $country =null;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=100, nullable=true)
+     *
+     * @ZFA\Filter({"name":"StringTrim"})
+     * @ZFA\Required(true)
+     * @ZFA\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
+     * @ZFA\Attributes({"type":"text", "placeholder":"0916587396"})
+     * @ZFA\Options({"label":"phone number"})
+     */
+    protected $phone_no = null;
+    
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=100, nullable=true)
+     * * @ZFA\Filter({"name":"StringTrim"})
+     * @ZFA\Required(true)
+     * @ZFA\Validator({"name":"StringLength", "options":{"min":1, "max":100}})
+     * @ZFA\Attributes({"type":"url", "placeholder":"c:/xampp/htdoc/fre,jpg"})
+     * @ZFA\Options({"label":"picture"})
+     */
+
+    protected $picture  = null;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=128)
      *
      * @ZFA\Filter({"name":"StringTrim"})
-     * @ZFA\Required(true)
      * @ZFA\Validator({"name":"StringLength", "options":{"min":1, "max":128}})
      * @ZFA\Attributes({"type":"password"})
-     * @ZFA\Options({"label":"Password"})
+     * @ZFA\Options({"label":"Passiword"})
      */
     protected $password = null;
 
@@ -129,22 +166,106 @@ class User implements UserInterface, ProviderInterface
     {
         $this->roles = new ArrayCollection();
     }
-
     public function toArray()
     {
         return array(
             'id' => $this->getId(),
-            'username' => $this->getUsername(),
             'email' => $this->getEmail(),
             'displayName' => $this->getDisplayName(),
             'firstName' => $this->getFirstName(),
-            'lastName' => $this->getLastName(),
+            'middleName' => $this->getMiddleName(),
+            'sureName' => $this ->getSureName(),
+            'country' => $this ->getCountry(),
+            'phone_no' => $this ->getPhoneNo(),
+            'picture' => $this -> getPicture(),
             'state' => $this->getState(),
             'roles' => array_map(
                 function($r) { return array('id' => $r->getId()); },
                 $this->getRoles()->getValues()
             )
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNo()
+    {
+        return $this->phone_no;
+    }
+
+    /**
+     * @param string $phone_no
+     */
+    public function setPhoneNo($phone_no)
+    {
+        $this->phone_no = $phone_no;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMiddleName()
+    {
+        return $this->middleName;
+    }
+
+    /**
+     * @param string $middleName
+     */
+    public function setMiddleName($middleName)
+    {
+        $this->middleName = $middleName;
+        $this->setDisplayName("{$this->firstName} {$this->middleName}");
+
+    }
+
+    /**
+     * @return string
+     */
+    public function getSureName()
+    {
+        return $this->sureName;
+    }
+
+    /**
+     * @param string $sureName
+     */
+    public function setSureName($sureName)
+    {
+        $this->sureName = $sureName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param string $picture
+     */
+    public function setPicture($picture)
+    {
+        $this->picture = $picture;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param string $country
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
     }
 
     public function __toString() {
@@ -241,36 +362,11 @@ class User implements UserInterface, ProviderInterface
     {
         $this->firstName = $firstName;
 
-        $this->setDisplayName("{$this->firstName} {$this->lastName}");
+        $this->setDisplayName("{$this->firstName} {$this->middleName}");
 
         return $this;
     }
 
-    /**
-     * Get lastName.
-     *
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * Set lastName.
-     *
-     * @param string $lastName
-     *
-     * @return void
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-
-        $this->setDisplayName("{$this->firstName} {$this->lastName}");
-
-        return $this;
-    }
 
     /**
      * Get displayName.
@@ -279,7 +375,7 @@ class User implements UserInterface, ProviderInterface
      */
     public function getDisplayName()
     {
-        return $this->displayName ? $this->displayName : "{$this->firstName} {$this->lastName}";
+        return $this->displayName ? $this->displayName : "{$this->firstName} {$this->middleName}";
     }
 
     /**

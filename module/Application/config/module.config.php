@@ -155,7 +155,7 @@ return array(
             ),
             array(
                 'label' => $translator->translate('Change Language'),
-                'uri' => '/application/language?to=' . ($locale == 'fr_CA' ? 'en_US' : 'fr_CA') . '&redirect=' . $redirect,
+                'uri' => '/application/language?to=' . ($locale =='en_US'  ? 'fr_CA' : 'en_US' ) . '&redirect=' . $redirect,
             ),
         ),
     ),

@@ -42,12 +42,12 @@ class Module
         $translator = $e->getApplication()->getServiceManager()->get('translator');
         $translator
             ->setLocale($language->current)
-            ->setFallbackLocale('fr_CA');
+            ->setFallbackLocale('en_US');
 
         $mvctranslator = $e->getApplication()->getServiceManager()->get('MvcTranslator');
         $mvctranslator
             ->setLocale($language->current)
-            ->setFallbackLocale('fr_CA');
+            ->setFallbackLocale('en_US');
 
         $mvctranslator->addTranslationFile(
             'phpArray',
@@ -55,12 +55,12 @@ class Module
             'default',
             'en_US'
         );
-        $mvctranslator->addTranslationFile(
-            'phpArray',
-            './vendor/zendframework/zendframework/resources/languages/fr/Zend_Validate.php',
-            'default',
-            'fr_CA'
-        );
+//        $mvctranslator->addTranslationFile(
+//            'phpArray',
+//            './vendor/zendframework/zendframework/resources/languages/fr/Zend_Validate.php',
+//            'default',
+//            'fr_CA'
+//        );
         AbstractValidator::setDefaultTranslator($mvctranslator);
 
         \Locale::setDefault(isset($language->current) ? $language->current : 'fr_CA');

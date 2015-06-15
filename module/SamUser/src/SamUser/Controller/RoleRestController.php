@@ -30,6 +30,10 @@ class RoleRestController extends BasicRestController
     // Returned index
     protected $index = 'roles';
 
+    /**
+     * @param mixed $data
+     * @return JsonModel
+     */
     public function create($data)
     {
         $request = $this->getRequest();

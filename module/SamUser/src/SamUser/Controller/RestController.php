@@ -26,7 +26,7 @@ class RestController extends BasicRestController
     protected $cacheTime = 3600;
 
     // Select fields
-    protected $selectFields = 'id,username,email,firstName,lastName';
+    protected $selectFields = 'id,email,firstName,sureName';
 
     // Join fields
     protected $joinFields = array(
@@ -62,7 +62,6 @@ class RestController extends BasicRestController
         }
 
         $em = $this->getEntityManager();
-
         // Validate using the form
         $form = $this->getServiceLocator()->get('EntityForm')->getForm($this->entity);
         $form->setData($data);
@@ -70,10 +69,8 @@ class RestController extends BasicRestController
             $this->getResponse()->setStatusCode(500);
             return new JsonModel(array('messages' => $form->getMessages()));
         }
-
         // Get linked object
         $object = $form->getData();
-
         // Save password
         $bcrypt = new Bcrypt;
         $bcrypt->setCost($this->cost);
@@ -81,7 +78,7 @@ class RestController extends BasicRestController
         $object->setPassword($pass);
 
         // Set display name
-        $object->setDisplayName("{$object->getFirstName()} {$object->getLastName()}");
+        $object->setDisplayName("{$object->getFirstName()} {$object->getmiddleName()}");
 
         // Set default user role
         $userRole = $em->getRepository('SamUser\Entity\Role')->findOneBy(array('roleId' => 'user'));
