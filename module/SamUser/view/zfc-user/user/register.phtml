@@ -1,10 +1,10 @@
 <h1>Register</h1>
 
 <?php
-if (!$this->enableRegistration) {
-    print "Registration is disabled";
-    return;
-}
+//if ($this->enableRegistration) {
+//    print "Registration is disabled";
+//    return;
+//}
 $form = $this->registerForm;
 $form->prepare();
 $form->setAttribute('action', $this->url('zfcuser/register'));
