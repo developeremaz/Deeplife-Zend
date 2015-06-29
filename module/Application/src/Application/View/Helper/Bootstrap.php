@@ -65,7 +65,7 @@ class Bootstrap extends AbstractHelper {
   }
 
   public function closeTag($form) {
-    return $this->view->form()->closeTag();
+    return $this->view->$form()->closeTag();
   }
 
   public function form($form) {

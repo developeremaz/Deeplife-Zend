@@ -36,6 +36,7 @@ class UsersController extends AbstractActionController
 
         // Create form
         $createForm = $sl->get('EntityForm')->getForm('SamUser\Entity\User', 'create()');
+        $createForm = $sl->get('EntityForm')->getForm('SamUser\Entity\User', 'register()');
 
         // Change password form
         $changePasswordForm = $sl->get('FormElementManager')->get(

@@ -12,8 +12,6 @@ class ChangePassword extends Form
     {
         parent::__construct('change-password');
 
-        // Empty translator to tell POEdit to hook on our translations
-        $this->translator = new \Zend\I18n\Translator\Translator;
     }
 
     public function init()
@@ -40,7 +38,7 @@ class ChangePassword extends Form
                 'data-ng-model' => 'passwordForm.password',
             ),
             'options' => array(
-                'label' => $this->translator->translate('Password'),
+                'label' => 'Password',
             ),
         ));
 
@@ -53,7 +51,7 @@ class ChangePassword extends Form
                 'data-ng-model' => 'passwordForm.passwordConfirm',
             ),
             'options' => array(
-                'label' => $this->translator->translate('Confirm'),
+                'label' => 'Confirm',
             ),
         ));
 
@@ -62,7 +60,7 @@ class ChangePassword extends Form
             'name' => 'close',
             'attributes' => array(
                 'type' => 'reset',
-                'value' => $this->translator->translate('Close'),
+                'value' => 'Close',
                 'class' => 'btn btn-default form-control',
                 'data-dismiss' => "modal"
             )
@@ -71,7 +69,7 @@ class ChangePassword extends Form
             'name' => 'submit',
             'attributes' => array(
                 'type' => 'submit',
-                'value' => $this->translator->translate('Save'),
+                'value' => 'Save',
                 'class' => 'btn btn-primary form-control'
             )
         ));
