@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+
 <?php
 if (!$this->enableRegistration) {
     print "Registration is disabled";
@@ -13,12 +12,12 @@ $form->setAttribute('method', 'post');
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deep Life Register</title>
-        <link href="/public/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/public/font-awesome/css/font-awesome.css" rel="stylesheet">
-        <link href="/public/css/plugins/iCheck/custom.css" rel="stylesheet">
-        <link href="/public/css/animate.css" rel="stylesheet">
-        <link href="/public/css/style.css" rel="stylesheet">
+    <title>DeepLife||Register</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="../css/plugins/iCheck/custom.css" rel="stylesheet">
+        <link href="../css/animate.css" rel="stylesheet">
+        <link href="../css/style.css" rel="stylesheet">
 </head>
 <body class="gray-bg" style="background-color:whitesmoke"></body>
 <div class="row">
@@ -32,9 +31,9 @@ $form->setAttribute('method', 'post');
         <h3></h3>
         <!--<p>Create account to see it in action.</p>-->
         <div class="col-sm-12">
-<!--            --><?php //echo $this->form()->openTag($form) ?>
+            <?php echo $this->form()->openTag($form) ?>
 <!---->
-<!--            <dl class="zend_form">-->
+            <dl class="zend_form">
                 <?php echo $this->form()->openTag($form) ?>
                 <dl class="zend_form">
                     <?php foreach ($form as $element): ?>
