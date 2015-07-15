@@ -71,11 +71,11 @@ class EntityForm implements ServiceLocatorAwareInterface {
         $actions = new Fieldset('actions');
         $actions->add(array(
             'name' => 'close',
-            'attributes' => array('type' => 'button', 'value' => $this->translator->translate('Close'), 'class' => 'form-control btn btn-default', 'data-dismiss' => "modal")
+            'attributes' => array('type' => 'button', 'value' => 'Close', 'class' => 'form-control btn btn-default', 'data-dismiss' => "modal")
         ));
         $actions->add(array(
             'name' => 'submit',
-            'attributes' => array('type' => 'submit', 'value' => $this->translator->translate('Save'), 'class' => 'form-control btn btn-primary')
+            'attributes' => array('type' => 'submit', 'value' => 'Save', 'class' => 'form-control btn btn-primary')
         ));
 
         $form->add($actions);
